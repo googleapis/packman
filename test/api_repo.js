@@ -91,6 +91,7 @@ var errsOn = function errsOn(done) {
 
 var passesOn = function passesOn(done) {
   var shouldPass = function shouldPass(err) {
+    console.log('should pass, but only %s is null', err);
     expect(err).to.be.null();
     done();
   };
