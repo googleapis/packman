@@ -3,8 +3,8 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 description = 'GRPC library for service packager-unittest-v2'
-group = "com.google.apis"
-version = "packager-unittest-v2-SNAPSHOT"
+group = "io.gapi"
+version = "1.0.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
   compile "com.google.protobuf:protobuf-java:3.0.0-beta-1"
+  compile "io.gapi:googleapis-common-protos:0.0.0-SNAPSHOT"
 }
 
 task javadocJar(type: Jar) {
@@ -57,7 +58,7 @@ uploadArchives.repositories.mavenDeployer {
   uploadArchives.repositories.mavenDeployer,
 ]*.pom { pom ->
   pom.project {
-    name "com.google.apis:google-grpc-api-packager-unittest-v2"
+    name "io.gapi:packager-unittest-v2"
     description project.description
     url 'https://github.com/google/googleapis'
 
