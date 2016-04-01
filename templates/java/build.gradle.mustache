@@ -5,6 +5,8 @@ apply plugin: 'signing'
 description = 'GRPC library for service {{api.name}}-{{api.version}}'
 group = "io.gapi"
 version = "{{api.semantic_version}}-SNAPSHOT"
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
 
 repositories {
   mavenCentral()

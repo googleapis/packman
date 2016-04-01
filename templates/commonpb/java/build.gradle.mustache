@@ -5,6 +5,11 @@ apply plugin: 'signing'
 description = 'Common protobufs used in Google APIs'
 group = "io.gapi"
 version = "0.0.0-SNAPSHOT"
+// version = "{{api.semantic_version}}-SNAPSHOT"
+// TODO: switch to this once all common protos are actually public
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
 
 repositories {
   mavenCentral()
