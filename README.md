@@ -24,6 +24,17 @@ gen-api-package --api_name=logging/v2 -l python
 ```
 
 
+Generate the java package for Google's logging/v2 API, where logging/v2 is
+service defined in [googleapis](https://github.com/google/googleapis). The package
+
+- only contains the .proto files - there is no java source code
+- takes a dependency on [grpc-gradle-plugin](https://github.com/google/protobuf-gradle-plugin) to generate the protobuf and gRPC source when the package is built.
+
+
+```
+gen-api-package --api_name=logging/v2 -l java
+```
+
 Generate the ruby package for Google's pubsub/v1 API, where pubsub/v1 is
 service defined in [googleapis](https://github.com/google/googleapis).
 
