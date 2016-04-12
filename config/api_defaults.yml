@@ -21,4 +21,10 @@ email: googleapis-packages@google.com
 github_user_uri: https://github.com/google
 homepage: https://github.com/google/googleapis
 license: Apache-2.0
-semantic_version: '1.0.13'
+semver:
+  go: '0.6.0'
+  objc: '0.6.0'
+  java: '0.6.0'
+  nodejs: '0.6.0'
+  python: '1.0.13'
+  ruby: '0.6.0'
