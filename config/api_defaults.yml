@@ -18,8 +18,8 @@
 author: Google Inc
 description: a grpc-based api
 email: googleapis-packages@google.com
-github_user_uri: https://github.com/google
-homepage: https://github.com/google/googleapis
+github_user_uri: https://github.com/googleapis
+homepage: https://github.com/googleapis/googleapis
 license: Apache-2.0
 semver:
   go: '0.6.0'
@@ -27,5 +27,5 @@ semver:
   java: '0.6.0'
   nodejs: '0.6.0'
   python: '1.0.18'
-  ruby: '0.6.0'
+  ruby: '0.6.3'
   php: '0.6.0'
