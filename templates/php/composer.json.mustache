@@ -1,0 +1,19 @@
+{
+    "name": "google/{{api.name}}-{{api.version}}",
+    "version": "{{api.semantic_version}}",
+    "type": "library",
+    "description": "GRPC library for the {{api.simplename}}-{{api.version}} service",
+    "keywords": ["google", "grpc"],
+    "homepage": "{{{api.homepage}}}",
+    "license": "{{api.license}}",
+    "authors": [{
+                    "name": "{{api.author}}",
+                    "email": "{{api.email}}"
+                }],
+    "require": {
+        "php": ">=5.4",
+        "google/auth": "0.7",
+        "grpc/grpc": ">=0.14.1",
+        "google/gax": "*"
+    }
+}

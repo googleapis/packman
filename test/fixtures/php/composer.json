@@ -1,0 +1,19 @@
+{
+    "name": "google/packager-unittest-v2",
+    "version": "1.0.0",
+    "type": "library",
+    "description": "GRPC library for the packager-v2 service",
+    "keywords": ["google", "grpc"],
+    "homepage": "https://github.com/google/googleapis",
+    "license": "BSD-3-Clause",
+    "authors": [{
+                    "name": "Google Inc",
+                    "email": "googleapis-packages@google.com"
+                }],
+    "require": {
+        "php": ">=5.4",
+        "google/auth": "0.7",
+        "grpc/grpc": ">=0.14.1",
+        "google/gax": "*"
+    }
+}
