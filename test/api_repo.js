@@ -369,10 +369,10 @@ describe('ApiRepo', function() {
         expect(err).to.be.null();
         // The test uses the fake protoc, so it just echoes its args
         var want = '--python_out=' + path.join(repo.outDir, 'python');
-        want += ' -I.';
-        want += ' -I/usr/local/include';
         want += ' --grpc_out=' + path.join(repo.outDir, 'python');
         want += ' --plugin=protoc-gen-grpc=/testing/bin/my_python_plugin';
+        want += ' -I.';
+        want += ' -I/usr/local/include';
         want += ' ' + fakeProto + '\n';
         expect(got).to.contain(want);
         done();
@@ -389,11 +389,11 @@ describe('ApiRepo', function() {
            expect(err).to.be.null();
            // The test uses the fake protoc, so it just echoes its args
            var want = '--python_out=' + path.join(repo.outDir, 'python');
+           want += ' --grpc_out=' + path.join(repo.outDir, 'python');
+           want += ' --plugin=protoc-gen-grpc=/testing/bin/my_python_plugin';
            want += ' -I.';
            want += ' -I/an/include/path';
            want += ' -I/another/include/path';
-           want += ' --grpc_out=' + path.join(repo.outDir, 'python');
-           want += ' --plugin=protoc-gen-grpc=/testing/bin/my_python_plugin';
            want += ' ' + fakeProto + '\n';
            expect(got).to.contain(want);
            done();
