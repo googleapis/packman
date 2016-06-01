@@ -44,6 +44,9 @@ var templateDirs = {
   },
   ruby: {
     templateDir: path.join(__dirname, '..', 'templates', 'ruby')
+  },
+  php: {
+    templateDir: path.join(__dirname, '..', 'templates', 'php')
   }
 };
 
@@ -146,6 +149,9 @@ var testPackageInfo = {
       },
       ruby: {
         version: '0.9.3'
+      },
+      php: {
+        version: '0.14.1'
       }
     },
     auth: {
@@ -376,6 +382,43 @@ describe('the java package builder', function() {
     };
     async.series([
       packager.java.bind(null, opts),
+      checkCopies,
+      checkExpanded
+    ], done);
+  });
+});
+
+describe('the php package builder', function() {
+  var top;
+  beforeEach(function() {
+    top = tmp.dirSync().name;
+  });
+
+  it ('should construct a php package', function(done) {
+    var opts = _.merge({
+      packageInfo: testPackageInfo,
+      top: path.join(top, 'php')
+    }, templateDirs.php);
+
+    var copies = [
+      'php/PUBLISHING.md',
+    ];
+    var checkCopies = function checkCopies(next) {
+      var checkACopy = genCopyCompareFunc(top);
+      var copyTasks = _.map(copies, checkACopy);
+      async.parallel(copyTasks, next);
+    };
+    var expanded = [
+      'php/composer.json',
+      'php/README.md'
+    ];
+    var compareWithFixture = genFixtureCompareFunc(top);
+    var checkExpanded = function checkExpanded(next) {
+      var expandTasks = _.map(expanded, compareWithFixture);
+      async.parallel(expandTasks, next);
+    };
+    async.series([
+      packager.php.bind(null, opts),
       checkCopies,
       checkExpanded
     ], done);

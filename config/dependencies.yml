@@ -39,6 +39,8 @@ grpc:
     version: '0.13.1'
   nodejs:
     version: '0.13.1'
+  php:
+    version: '0.14.1'
 
 gax:
   python:
