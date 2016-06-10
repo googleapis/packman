@@ -31,5 +31,5 @@ semver:
   #       deleted but files still exist on the pypi servers and can prevent
   #       us from using the version number again.
   python: '0.7.6'
-  ruby: '0.6.3'
+  ruby: '0.6.6'
   php: '0.6.0'
