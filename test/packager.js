@@ -82,9 +82,16 @@ function filesEqual(file1, file2, done) {
   });
 }
 
-function genFixtureCompareFunc(top) {
+function genFixtureCompareFunc(top, fixture_subdirs) {
+  var fixture_base = ['fixtures'];
+  if (fixture_subdirs) {
+    fixture_base.push.apply(fixture_base, fixture_subdirs);
+  }
   return function compareWithFixture(c) {
-    var want = path.join(__dirname, 'fixtures', c);
+    var pathargs = fixture_base.slice();
+    pathargs.unshift(__dirname);
+    pathargs.push(c);
+    var want = path.join.apply(null, pathargs);
     var got = path.join(top, c);
     return filesEqual.bind(null, want, got);
   };
@@ -115,6 +122,9 @@ var testPackageInfo = {
     protobuf: {
       objc: {
         version: '3.0.0-alpha-3'
+      },
+      nodejs: {
+        version: '5.0.1'
       }
     },
     googleapis_common_protos: {
@@ -323,6 +333,7 @@ describe('the nodejs package builder', function() {
   it ('should construct a nodejs package', function(done) {
     var opts = _.merge({
       packageInfo: testPackageInfo,
+      nodejsUsePbjs: true,
       top: path.join(top, 'nodejs')
     }, templateDirs.nodejs);
     var copies = [
@@ -339,6 +350,38 @@ describe('the nodejs package builder', function() {
       'nodejs/README.md'
     ];
     var compareWithFixture = genFixtureCompareFunc(top);
+    var checkExpanded = function checkExpanded(next) {
+      var expandTasks = _.map(expanded, compareWithFixture);
+      async.parallel(expandTasks, next);
+    };
+    async.series([
+      packager.nodejs.bind(null, opts),
+      checkCopies,
+      checkExpanded
+    ], done);
+  });
+
+  it ('should construct a proto-based nodejs package', function(done) {
+    var opts = _.merge({
+      packageInfo: testPackageInfo,
+      nodejsUsePbjs: false,
+      top: path.join(top, 'nodejs')
+    }, templateDirs.nodejs);
+    opts.packageInfo.nodejsUseProtos = true;
+    var copies = [
+      'nodejs/index.js',
+      'nodejs/PUBLISHING.md'
+    ];
+    var checkCopies = function checkCopies(next) {
+      var checkACopy = genCopyCompareFunc(top);
+      var copyTasks = _.map(copies, checkACopy);
+      async.parallel(copyTasks, next);
+    };
+    var expanded = [
+      'nodejs/package.json',
+      'nodejs/README.md'
+    ];
+    var compareWithFixture = genFixtureCompareFunc(top, ['proto-based']);
     var checkExpanded = function checkExpanded(next) {
       var expandTasks = _.map(expanded, compareWithFixture);
       async.parallel(expandTasks, next);
