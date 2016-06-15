@@ -47,6 +47,8 @@ gax:
     version: '0.11.0'
   ruby:
     version: '0.3.0'
+  nodejs:
+    version: '0.3.2'
 
 protobuf:
   python:
@@ -62,3 +64,12 @@ googleapis_common_protos:
     version: '1.1.0'
   ruby:
     version: '1.1.1'
+
+# nodejs-specific dependencies.
+nodeModules:
+  arguejs:
+    version: '0.2.3'
+  fsPromise:
+    version: '0.5.0'
+  through2:
+    version: '2.0.1'
