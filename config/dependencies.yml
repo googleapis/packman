@@ -53,6 +53,9 @@ protobuf:
     version: '3.0.0b3'
   ruby:
     version: '3.0.0.alpha.5.0.5.1'
+  nodejs:
+    # This is the version of ProtoBuf.js.
+    version: '5.0.1'
 
 googleapis_common_protos:
   python:

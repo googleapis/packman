@@ -206,6 +206,18 @@ var parseArgs = function parseArgs() {
     }
   );
   cli.addArgument(
+    [ '--nodejs_use_pbjs' ],
+    {
+      defaultValue: false,
+      action: 'storeTrue',
+      help: 'When set, the nodejs grpc client is generated with the json data\n'
+            + ' generated from pbjs. Otherwise the client bundles .proto\n'
+            + ' files. Note that pbjs-based client does not work currently\n'
+            + ' (see https://github.com/googleapis/packman/issues/35).',
+      dest: 'nodejsUsePbjs'
+    }
+  );
+  cli.addArgument(
     [ '--override_plugins' ],
     {
       action: 'append',
