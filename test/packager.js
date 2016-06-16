@@ -368,6 +368,7 @@ describe('the nodejs package builder', function() {
       top: path.join(top, 'nodejs')
     }, templateDirs.nodejs);
     opts.packageInfo.nodejsUseProtos = true;
+    opts.packageInfo.protoFiles = ['proto/foo.proto', 'proto/bar/baz.proto'];
     var copies = [
       'nodejs/index.js',
       'nodejs/PUBLISHING.md'
@@ -379,6 +380,7 @@ describe('the nodejs package builder', function() {
     };
     var expanded = [
       'nodejs/package.json',
+      'nodejs/service.js',
       'nodejs/README.md'
     ];
     var compareWithFixture = genFixtureCompareFunc(top, ['proto-based']);
