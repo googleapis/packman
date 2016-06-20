@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-{{#apiFiles}}
-var apiClient = require('./lib/{{.}}');
+var apiClient = require('./lib/foo_api');
 for (var key in apiClient) {
   exports[key] = apiClient[key];
 }
-{{/apiFiles}}
+var apiClient = require('./lib/bar_api');
+for (var key in apiClient) {
+  exports[key] = apiClient[key];
+}

@@ -7,20 +7,18 @@ contents since it was created.
 
 == PREREQUISITES
 
-- Node must installed
-- The latest version of [Bundler][] must be installed
+- Node and NPM must installed
 
 
 == TO PUBLISH
 
-- Make sure you have an account on [rubygems][].
-- Set up your machine to be to publish as described in [Publishing To RUBYGEMS.ORG][]
+- Make sure you have an account on npmjs.com.
+- Set up your machine to be to publish as described in [Publishing To npmjs.com][]
 - Run the following commands
 ```sh
 $ # (from this folder)
-$ bundle update && rake publish
+$ npm publish
 ```
 
-[rubygems]: http://rubygems.org
-[Publishing To RUBYGEMS.ORG]: http://guides.rubygems.org/publishing/#publishing-to-rubygemsorg
-[Bundler]: http://bundler.io
+[Publishing To npmjs.com]: https://docs.npmjs.com/getting-started/publishing-npm-packages
+
