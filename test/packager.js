@@ -404,7 +404,7 @@ describe('the nodejs package builder', function() {
     var expanded = [
       'nodejs/index.js'
     ];
-    var compareWithFixture =genFixtureCompareFunc(top, ['gax']);
+    var compareWithFixture = genFixtureCompareFunc(top, ['gax']);
     var checkExpanded = function checkExpanded(next) {
       var expandTasks = _.map(expanded, compareWithFixture);
       async.parallel(expandTasks, next);
