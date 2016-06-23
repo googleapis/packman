@@ -394,6 +394,23 @@ describe('the nodejs package builder', function() {
       checkExpanded
     ], done);
   });
+
+  it ('should construct a gax package', function(done) {
+    var opts = _.merge({
+      packageInfo: testPackageInfo,
+      top: path.join(top, 'nodejs')
+    }, {templateDir: path.join(__dirname, '..', 'templates', 'gax', 'nodejs')});
+    opts.mockApiFilesForTest = ['foo_api.js', 'bar_api.js'];
+    var expanded = [
+      'nodejs/index.js'
+    ];
+    var compareWithFixture = genFixtureCompareFunc(top, ['gax']);
+    var checkExpanded = function checkExpanded(next) {
+      var expandTasks = _.map(expanded, compareWithFixture);
+      async.parallel(expandTasks, next);
+    };
+    async.series([packager.nodejs.bind(null, opts), checkExpanded], done);
+  });
 });
 
 describe('the java package builder', function() {
