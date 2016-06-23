@@ -30,6 +30,6 @@ semver:
   #       publishing some 1.0.x versions to pypi already. They are now
   #       deleted but files still exist on the pypi servers and can prevent
   #       us from using the version number again.
-  python: '0.7.9'
+  python: '0.7.10'
   ruby: '0.6.6'
   php: '0.6.0'
