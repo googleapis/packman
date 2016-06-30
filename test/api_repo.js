@@ -101,9 +101,11 @@ describe('ApiRepo', function() {
   describe('on the test fixture repo with no plugins', function() {
     var fakes, repo;
     describe('configured for nodejs', function(){
+      // TODO: add a test case for nodejsUsePbjs: false.
       beforeEach(function() {
         repo = new ApiRepo({
           isGoogleApi: true,
+          nodejsUsePbjs: true,
           includePath: [path.join(__dirname, 'fixtures', 'include')],
           languages: ['nodejs'],
           templateRoot: path.join(__dirname, '..', 'templates')
@@ -576,6 +578,44 @@ describe('ApiRepo', function() {
         languages: ['lisp', 'scala', 'scheme']
       });
       repo._checkDeps({env: {'PATH': fakes.path}}, errsOn(done));
+    });
+  });
+  describe('method `_buildProtoFilesMapping`', function() {
+    var repo;
+    var includePath = ['/tmp/foo', '/tmp/bar'];
+    before(function() {
+      // nodejs is not required, but used by it.
+      repo = new ApiRepo({languages: ['nodejs']});
+    });
+    it('unifies same files into one entry', function() {
+      var filesMap = repo._buildProtoFilesMapping([
+        ['/tmp/foo/foo.proto', '/tmp/foo/foo2.proto', '/tmp/foo/base.proto'],
+        ['/tmp/foo/base.proto', '/tmp/bar/package/bar.proto']
+      ], includePath);
+      expect(filesMap).to.deep.equal({
+        '/tmp/foo/foo.proto': 'foo.proto',
+        '/tmp/foo/foo2.proto': 'foo2.proto',
+        '/tmp/foo/base.proto': 'base.proto',
+        '/tmp/bar/package/bar.proto': 'package/bar.proto'
+      });
+    });
+
+    it('recognizes the default proto', function() {
+      var filesMap = repo._buildProtoFilesMapping([
+        ['/tmp/foo/foo.proto', '/tmp/foo/foo2.proto',
+         '/usr/local/include/google/protobuf/descriptor.proto'],
+        ['/usr/local/include/google/protobuf/empty.proto',
+         '/tmp/bar/package/bar.proto']
+      ], includePath);
+      expect(filesMap).to.deep.equal({
+        '/tmp/foo/foo.proto': 'foo.proto',
+        '/tmp/foo/foo2.proto': 'foo2.proto',
+        '/tmp/bar/package/bar.proto': 'package/bar.proto',
+        '/usr/local/include/google/protobuf/descriptor.proto':
+          'google/protobuf/descriptor.proto',
+        '/usr/local/include/google/protobuf/empty.proto':
+          'google/protobuf/empty.proto'
+      });
     });
   });
 });

@@ -2,7 +2,7 @@ buildscript {
   repositories {
     mavenCentral()
   }
-  dependencies { classpath 'com.google.protobuf:protobuf-gradle-plugin:0.7.6' }
+  dependencies { classpath 'com.google.protobuf:protobuf-gradle-plugin:0.7.7' }
 }
 
 apply plugin: 'java'
@@ -12,7 +12,7 @@ apply plugin: 'com.google.protobuf'
 
 description = 'GRPC library for service {{api.name}}-{{api.version}}'
 group = "io.gapi"
-version = "{{api.semantic_version}}-SNAPSHOT"
+version = "{{api.semantic_version}}"
 // TODO: use a flag to determine whether to produce a release or a snapshot
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -30,6 +30,7 @@ repositories {
 dependencies {
   compile "com.google.protobuf:protobuf-java:3.0.0-beta-2"
   compile "io.gapi:googleapis-common-protos:0.0.0-SNAPSHOT"
+  compile "io.grpc:grpc-all:0.14.1"
 }
 
 protobuf {
@@ -38,6 +39,26 @@ protobuf {
     // protobuf-java directly, you will be transitively depending on the
     // protobuf-java version that grpc depends on.
     artifact = "com.google.protobuf:protoc:3.0.0-beta-2"
+  }
+  plugins {
+    grpc {
+      artifact = 'io.grpc:protoc-gen-grpc-java:0.14.1'
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {
+        outputSubDir = 'java'
+      }
+    }
+  }
+}
+
+sourceSets {
+  main {
+    java {
+      srcDir 'build/generated/source/proto/main/java'
+    }
   }
 }
 
@@ -60,55 +81,43 @@ signing {
   sign configurations.archives
 }
 
-uploadArchives.repositories.mavenDeployer {
-  beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-  String stagingUrl
-    if (rootProject.hasProperty('repositoryId')) {
-      stagingUrl = 'https://oss.sonatype.org/service/local/staging/deployByRepositoryId/' +
-          rootProject.repositoryId
-    } else {
-      stagingUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-    }
-  def configureAuth = {
-    if (rootProject.hasProperty('ossrhUsername') && rootProject.hasProperty('ossrhPassword')) {
-      authentication(userName: rootProject.ossrhUsername, password: rootProject.ossrhPassword)
-    }
-  }
-  repository(url: stagingUrl, configureAuth)
-  snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/', configureAuth)
-}
-
-[
-  install.repositories.mavenInstaller,
-  uploadArchives.repositories.mavenDeployer,
-]*.pom { pom ->
-  pom.project {
-    name "io.gapi:{{api.name}}-{{api.version}}"
-    description project.description
-    url '{{{api.homepage}}}'
-
-    scm {
-      connection 'scm:svn:https://github.com/google/googleapis.git'
-      developerConnection 'scm:svn:git@github.com:google/googleapis.git'
-      url 'https://github.com/google/googleapis'
-    }
-
-    licenses {
-      license {
-        name '{{api.license}}'
-        url '{{{api.license.url}}}'
+if (rootProject.hasProperty('mavenRepoUrl')) {
+  uploadArchives.repositories.mavenDeployer {
+    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+    String mavenRepoUrl = rootProject.mavenRepoUrl
+    def configureAuth = {
+      if (rootProject.hasProperty('mavenUsername') && rootProject.hasProperty('mavenPassword')) {
+        authentication(userName: rootProject.mavenUsername, password: rootProject.mavenPassword)
+      } else {
+        throw new GradleException("Root project must have mavenUsername and mavenPassword")
       }
     }
-
-    developers {
-      developer {
-        id "{{api.email}}"
-        name "{{api.author}}"
-        email "{{api.email}}"
-        url "{{{api.homepage}}}"
-        // https://issues.gradle.org/browse/GRADLE-2719
-        organization = "Google, Inc."
-        organizationUrl "https://www.google.com"
+    repository(url: mavenRepoUrl, configureAuth)
+    pom.project {
+      name "io.gapi:grpc-google-pubsub-v1"
+      description project.description
+      url 'https://github.com/googleapis/googleapis'
+      scm {
+        connection 'scm:svn:https://github.com/google/googleapis.git'
+        developerConnection 'scm:svn:git@github.com:google/googleapis.git'
+        url 'https://github.com/google/googleapis'
+      }
+      licenses {
+        license {
+          name 'Apache-2.0'
+          url ''
+        }
+      }
+      developers {
+        developer {
+          id  "googleapis-packages@google.com"
+          name "Google Inc"
+          email "googleapis-packages@google.com"
+          url "https://github.com/googleapis/googleapis"
+          // https://issues.gradle.org/browse/GRADLE-2719
+          organization = "Google, Inc."
+          organizationUrl "https://www.google.com"
+        }
       }
     }
   }
