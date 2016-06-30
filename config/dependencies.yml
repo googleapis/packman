@@ -44,7 +44,7 @@ grpc:
 
 gax:
   python:
-    version: '0.12.1'
+    version: '0.12.2'
   ruby:
     version: '0.3.0'
   nodejs:
