@@ -33,4 +33,4 @@ packages:
     version: ''
 
 # semver is the semantic version of the common protos package.
-semver: 1.1.0
+semver: 1.2.0
