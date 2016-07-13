@@ -38,7 +38,7 @@ grpc:
   ruby:
     version: '0.14.1'
   nodejs:
-    version: '0.14.1'
+    version: '0.15.0'
   php:
     version: '0.14.1'
 
@@ -46,9 +46,9 @@ gax:
   python:
     version: '0.12.2'
   ruby:
-    version: '0.3.0'
+    version: '0.4.0'
   nodejs:
-    version: '0.3.2'
+    version: '0.5.1'
 
 protobuf:
   python:
@@ -69,7 +69,4 @@ googleapis_common_protos:
 nodeModules:
   arguejs:
     version: '0.2.3'
-  fsPromise:
-    version: '0.5.0'
-  through2:
-    version: '2.0.1'
+

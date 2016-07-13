@@ -25,11 +25,11 @@ semver:
   go: '0.6.0'
   objc: '0.6.0'
   java: '0.6.0'
-  nodejs: '0.6.0'
+  nodejs: '0.7.1'
   # TODO: Python must go to 1.0.20 or 1.1.0 when we GA, due to mistakenly
   #       publishing some 1.0.x versions to pypi already. They are now
   #       deleted but files still exist on the pypi servers and can prevent
   #       us from using the version number again.
   python: '0.7.11'
-  ruby: '0.6.6'
+  ruby: '0.6.7'
   php: '0.6.0'
