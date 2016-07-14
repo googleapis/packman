@@ -186,7 +186,7 @@ var parseArgs = function parseArgs() {
   cli.addArgument(
     [ '-g', '--is_google_api' ],
     {
-      defaultValue: true,
+      defaultValue: false,
       action: 'storeTrue',
       help: 'When set indicates that the API is an official google API.\n'
             + ' It means that there is a top-level "google" directory in'
