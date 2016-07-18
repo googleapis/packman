@@ -272,8 +272,7 @@ var main = function main() {
   }
   if (opts.gaxDir) {
     opts.gaxDir = path.resolve(opts.gaxDir);
-    opts.isGoogleApi = true;
-    opts.pkgPrefix = 'gax-google-';
+    opts.pkgPrefix = 'gax-';
     opts.outDir = opts.gaxDir;
   }
   if (!opts.apiName) {
