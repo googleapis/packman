@@ -36,7 +36,7 @@ grpc:
   python:
     version: '0.15.0'
   ruby:
-    version: '0.14.1'
+    version: '0.15.0'
   nodejs:
     version: '0.15.0'
   php:
@@ -46,7 +46,7 @@ gax:
   python:
     version: '0.12.2'
   ruby:
-    version: '0.4.0'
+    version: '0.4.1'
   nodejs:
     version: '0.5.1'
 
