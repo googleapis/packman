@@ -18,7 +18,6 @@ install_requires = [
 setuptools.setup(
   name='packager-unittest-v2',
   version='1.0.0',
-
   author='Google Inc',
   author_email='googleapis-packages@google.com',
   classifiers=[

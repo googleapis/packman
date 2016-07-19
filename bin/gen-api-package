@@ -121,9 +121,11 @@ var parseArgs = function parseArgs() {
   cli.addArgument(
     [ '-r', '--services_root' ],
     {
+      action: 'append',
       help: 'The directory containing the rpc service proto definitions.\n' +
-            ' Should not be specified with -u/--zip_url, which clobbers this.',
-      dest: 'repoDir'
+            ' Can be specified multiple times. Should not be specified with\n' +
+            ' -u/--zip_url, which clobbers this.',
+      dest: 'repoDirs'
     }
   );
   cli.addArgument(
@@ -267,9 +269,8 @@ var main = function main() {
   if (opts.outDir) {
     opts.outDir = path.resolve(opts.outDir);
   }
-  if (opts.repoDir) {
-    opts.repoDir = path.resolve(opts.repoDir);
-  }
+  opts.repoDirs = opts.repoDirs || [];
+  opts.repoDirs = opts.repoDirs.map(path.resolve);
   if (opts.gaxDir) {
     opts.gaxDir = path.resolve(opts.gaxDir);
     opts.pkgPrefix = 'gax-';

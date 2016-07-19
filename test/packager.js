@@ -64,6 +64,7 @@ function filesEqual(file1, file2, done) {
       var diffCount = 0;
       diffs.forEach(function(d) {
         if (!!d.added || !!d.removed) {
+          console.warn('Difference found ', d);
           diffCount += 1;
         }
       });
