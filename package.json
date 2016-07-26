@@ -15,8 +15,9 @@
     "codecov": "~1.0",
     "diff": "~1.4.0",
     "dirty-chai": "~1.2",
+    "eslint": "~3.1.1",
+    "eslint-config-google": "^0.6.0",
     "istanbul": "~0.3.15",
-    "jshint": "~2.5",
     "mocha": "~2.2.5",
     "nock": "~2.3.0"
   },
@@ -37,7 +38,7 @@
     "codecov": "istanbul cover _mocha -- --reporter spec --slow 500 --timeout 5000 && codecov",
     "preversion": "npm test && npm run lint",
     "postversion": "git push origin && git push origin --tags",
-    "lint": "jshint lib test bin",
+    "lint": "eslint --ignore-pattern='test/fixtures/*' lib bin test",
     "test": "istanbul test _mocha -- --reporter spec --slow 500 --timeout 5000"
   },
   "author": "Google Inc",

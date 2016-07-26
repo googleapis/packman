@@ -18,7 +18,6 @@
 
 var _ = require('lodash');
 var async = require('async');
-var child_process = require('child_process');
 var diff = require('diff');
 var fs = require('fs-extra');
 var path = require('path');
@@ -72,7 +71,7 @@ function filesEqual(file1, file2, done) {
         done();
       } else {
         console.log(diffs);
-        if (diffCount == 1) {
+        if (diffCount === 1) {
           done(new Error('There was a difference'));
         } else {
           done(new Error('There were ' + diffCount + ' differences'));
@@ -82,13 +81,13 @@ function filesEqual(file1, file2, done) {
   });
 }
 
-function genFixtureCompareFunc(top, fixture_subdirs) {
-  var fixture_base = ['fixtures'];
-  if (fixture_subdirs) {
-    fixture_base.push.apply(fixture_base, fixture_subdirs);
+function genFixtureCompareFunc(top, fixtureSubdirs) {
+  var fixtureBase = ['fixtures'];
+  if (fixtureSubdirs) {
+    fixtureBase.push.apply(fixtureBase, fixtureSubdirs);
   }
   return function compareWithFixture(c) {
-    var pathargs = fixture_base.slice();
+    var pathargs = fixtureBase.slice();
     pathargs.unshift(__dirname);
     pathargs.push(c);
     var want = path.join.apply(null, pathargs);
@@ -105,18 +104,19 @@ function genCopyCompareFunc(top) {
   };
 }
 
+/* eslint-disable camelcase */
 var testPackageInfo = {
   api: {
-    'author': 'Google Inc',
-    'description': 'a unittest api',
-    'email': 'googleapis-packages@google.com',
-    'github_user_uri': 'https://github.com/google',
-    'homepage': 'https://github.com/google/googleapis',
-    'license': 'BSD-3-Clause',
-    'name': 'packager-unittest',
-    'simplename': 'packager',
-    'version': 'v2',
-    'semantic_version': '1.0.0'
+    author: 'Google Inc',
+    description: 'a unittest api',
+    email: 'googleapis-packages@google.com',
+    github_user_uri: 'https://github.com/google',
+    homepage: 'https://github.com/google/googleapis',
+    license: 'BSD-3-Clause',
+    name: 'packager-unittest',
+    simplename: 'packager',
+    version: 'v2',
+    semantic_version: '1.0.0'
   },
   dependencies: {
     protobuf: {
@@ -177,6 +177,7 @@ var testPackageInfo = {
     }
   }
 };
+/* eslint-enable camelcase */
 
 describe('the go package builder', function() {
   var top;
@@ -184,7 +185,7 @@ describe('the go package builder', function() {
     top = tmp.dirSync().name;
   });
 
-  it ('should construct a go package', function(done) {
+  it('should construct a go package', function(done) {
     var opts = _.merge({
       packageInfo: testPackageInfo,
       top: path.join(top, 'go')
@@ -210,7 +211,7 @@ describe('the objective c package builder', function() {
     top = tmp.dirSync().name;
   });
 
-  it ('should construct a objc package', function(done) {
+  it('should construct a objc package', function(done) {
     var opts = _.merge({
       packageInfo: testPackageInfo,
       top: path.join(top, 'objc')
@@ -244,7 +245,7 @@ describe('the python package builder', function() {
   beforeEach(function() {
     top = tmp.dirSync().name;
   });
-  it ('should construct a python package', function(done) {
+  it('should construct a python package', function(done) {
     var opts = _.merge({
       packageInfo: testPackageInfo,
       top: path.join(top, 'python')
@@ -292,7 +293,7 @@ describe('the ruby package builder', function() {
     top = tmp.dirSync().name;
   });
 
-  it ('should construct a ruby package', function(done) {
+  it('should construct a ruby package', function(done) {
     var opts = _.merge({
       packageInfo: testPackageInfo,
       top: path.join(top, 'ruby')
@@ -330,7 +331,7 @@ describe('the nodejs package builder', function() {
     top = tmp.dirSync().name;
   });
 
-  it ('should construct a nodejs package', function(done) {
+  it('should construct a nodejs package', function(done) {
     var opts = _.merge({
       packageInfo: testPackageInfo,
       nodejsUsePbjs: true,
@@ -361,7 +362,7 @@ describe('the nodejs package builder', function() {
     ], done);
   });
 
-  it ('should construct a proto-based nodejs package', function(done) {
+  it('should construct a proto-based nodejs package', function(done) {
     var opts = _.merge({
       packageInfo: testPackageInfo,
       nodejsUsePbjs: false,
@@ -395,7 +396,7 @@ describe('the nodejs package builder', function() {
     ], done);
   });
 
-  it ('should construct a gax package', function(done) {
+  it('should construct a gax package', function(done) {
     var opts = _.merge({
       packageInfo: testPackageInfo,
       top: path.join(top, 'nodejs')
@@ -419,7 +420,7 @@ describe('the java package builder', function() {
     top = tmp.dirSync().name;
   });
 
-  it ('should construct a java package', function(done) {
+  it('should construct a java package', function(done) {
     var opts = _.merge({
       packageInfo: testPackageInfo,
       top: path.join(top, 'java')
@@ -427,7 +428,7 @@ describe('the java package builder', function() {
 
     var copies = [
       'java/gradlew.bat',
-      'java/gradlew',
+      'java/gradlew'
     ];
     var checkCopies = function checkCopies(next) {
       var checkACopy = genCopyCompareFunc(top);
@@ -456,14 +457,14 @@ describe('the php package builder', function() {
     top = tmp.dirSync().name;
   });
 
-  it ('should construct a php package', function(done) {
+  it('should construct a php package', function(done) {
     var opts = _.merge({
       packageInfo: testPackageInfo,
       top: path.join(top, 'php')
     }, templateDirs.php);
 
     var copies = [
-      'php/PUBLISHING.md',
+      'php/PUBLISHING.md'
     ];
     var checkCopies = function checkCopies(next) {
       var checkACopy = genCopyCompareFunc(top);

@@ -19,7 +19,6 @@
 var _ = require('lodash');
 var chai = require('chai');
 chai.use(require('dirty-chai'));
-var child_process = require('child_process');
 var expect = chai.expect;
 var fs = require('fs-extra');
 var nock = require('nock');
@@ -36,7 +35,7 @@ function addFakeBinsToPath() {
       arguments,
       function(arg) {
         var bin = path.join(tmpObj.name, arg);
-        if (arg == 'protoc') {
+        if (arg === 'protoc') {
           // copy the fake protoc the path dir
           fs.copySync(path.join(__dirname, 'fixtures/fake_protoc'), bin);
         } else {
@@ -56,15 +55,15 @@ function addFakeProtocToPath() {
   var badDir = tmp.dirSync();
   var goodPath = goodDir.name + ":" + process.env.PATH;
   var badPath = badDir.name + ":" + process.env.PATH;
-  fs.copySync(path.join(__dirname, 'fixtures/fake_protoc') ,
+  fs.copySync(path.join(__dirname, 'fixtures/fake_protoc'),
               path.join(goodDir.name, 'protoc'));
-  fs.copySync(path.join(__dirname, 'fixtures/failing_protoc') ,
+  fs.copySync(path.join(__dirname, 'fixtures/failing_protoc'),
               path.join(badDir.name, 'protoc'));
   return {
-    'badDir': badDir.name,
-    'badPath': badPath,
-    'path': goodPath,
-    'dir': goodDir.name
+    badDir: badDir.name,
+    badPath: badPath,
+    path: goodPath,
+    dir: goodDir.name
   };
 }
 
@@ -74,8 +73,8 @@ var goodZip = path.join(__dirname, 'fixtures/master.zip');
 var getsGoodZipFrom = function getsGoodZipFrom(uri) {
   var urlObj = url.parse(uri);
   var host = urlObj.protocol + "//" + urlObj.hostname;
-  if (urlObj.protocol == "https") {
-    host =+ ":443";
+  if (urlObj.protocol === "https") {
+    host += ":443";
   }
   console.log('Getting zip at %s%s', urlObj.hostname, urlObj.pathname);
   nock(host).get(urlObj.pathname).replyWithFile(200, goodZip);
@@ -99,8 +98,8 @@ var passesOn = function passesOn(done) {
 
 describe('ApiRepo', function() {
   describe('on the test fixture repo with no plugins', function() {
-    var fakes, repo;
-    describe('configured for nodejs', function(){
+    var fakes, repo; // eslint-disable-line
+    describe('configured for nodejs', function() {
       // TODO: add a test case for nodejsUsePbjs: false.
       beforeEach(function() {
         repo = new ApiRepo({
@@ -134,12 +133,12 @@ describe('ApiRepo', function() {
         });
       });
     });
-    describe('configured for python', function(){
+    describe('configured for python', function() {
       beforeEach(function() {
         var testBins = ['protoc', 'grpc_python_plugin'];
         fakes = addFakeBinsToPath.apply(null, testBins);
         repo = new ApiRepo({
-          env: {'PATH': fakes.path},
+          env: {PATH: fakes.path},
           isGoogleApi: true,
           languages: ['python'],
           templateRoot: path.join(__dirname, '..', 'templates')
@@ -157,7 +156,7 @@ describe('ApiRepo', function() {
           repo.setUp();
         });
         it('should pass for known packages', function(done) {
-          repo.on('error', function(err) {
+          repo.on('error', function() {
             throw new Error('should not be reached');
           });
           repo.on('ready', function() {
@@ -168,7 +167,7 @@ describe('ApiRepo', function() {
       });
       describe('method `buildCommonProtoPkgs`', function() {
         it('should pass', function(done) {
-          repo.on('error', function(err) {
+          repo.on('error', function() {
             throw new Error('should not be reached');
           });
           repo.on('ready', function() {
@@ -178,12 +177,12 @@ describe('ApiRepo', function() {
         });
       });
     });
-    describe('configured for ruby', function(){
+    describe('configured for ruby', function() {
       beforeEach(function() {
         var testBins = ['protoc', 'grpc_ruby_plugin'];
         fakes = addFakeBinsToPath.apply(null, testBins);
         repo = new ApiRepo({
-          env: {'PATH': fakes.path},
+          env: {PATH: fakes.path},
           isGoogleApi: true,
           languages: ['ruby'],
           templateRoot: path.join(__dirname, '..', 'templates')
@@ -192,7 +191,7 @@ describe('ApiRepo', function() {
       });
       describe('method `buildCommonProtoPkgs`', function() {
         it('should pass', function(done) {
-          repo.on('error', function(err) {
+          repo.on('error', function() {
             throw new Error('should not be reached');
           });
           repo.on('ready', function() {
@@ -204,7 +203,7 @@ describe('ApiRepo', function() {
     });
   });
   describe('on the test fixture repo with python and ruby plugins', function() {
-    var fakes, repo;
+    var fakes, repo; // eslint-disable-line
     before(function() {
       var testBins = ['protoc', 'grpc_python_plugin', 'grpc_ruby_plugin'];
       fakes = addFakeBinsToPath.apply(null, testBins);
@@ -214,11 +213,11 @@ describe('ApiRepo', function() {
         fs.unlinkSync(bin);
       });
     });
-    describe('configured for ruby and python', function(){
+    describe('configured for ruby and python', function() {
       describe('method `setUp`', function() {
         beforeEach(function() {
           repo = new ApiRepo({
-            env: {'PATH': fakes.path},
+            env: {PATH: fakes.path},
             isGoogleApi: true,
             languages: ['ruby', 'python'],
             templateRoot: path.join(__dirname, '..', 'templates')
@@ -226,7 +225,7 @@ describe('ApiRepo', function() {
           getsGoodZipFrom(repo.zipUrl);
         });
         it('should fire the ready event', function(done) {
-          repo.on('error', function(err) {
+          repo.on('error', function() {
             throw new Error('should not be reached');
           });
           repo.on('ready', function() {
@@ -238,7 +237,7 @@ describe('ApiRepo', function() {
       describe('method `buildPackages`', function() {
         beforeEach(function() {
           repo = new ApiRepo({
-            env: {'PATH': fakes.path},
+            env: {PATH: fakes.path},
             isGoogleApi: true,
             languages: ['ruby', 'python'],
             templateRoot: path.join(__dirname, '..', 'templates')
@@ -246,7 +245,7 @@ describe('ApiRepo', function() {
           getsGoodZipFrom(repo.zipUrl);
         });
         it('should pass for known packages', function(done) {
-          repo.on('error', function(err) {
+          repo.on('error', function() {
             throw new Error('should not be reached');
           });
           repo.on('ready', function() {
@@ -276,12 +275,12 @@ describe('ApiRepo', function() {
     });
   });
   describe('method `_buildProtos`', function() {
-    var fakes, repo, failingRepo;
+    var fakes, repo; // eslint-disable-line
     beforeEach(function(done) {
       fakes = addFakeProtocToPath();
       repo = new ApiRepo({
         isGoogleApi: true,
-        env: {'PATH': fakes.path}
+        env: {PATH: fakes.path}
       });
       getsGoodZipFrom(repo.zipUrl);
       repo._checkRepo(done); // partially initialize the repo
@@ -310,20 +309,22 @@ describe('ApiRepo', function() {
       };
       repo._checkRepo(thisTest);
     });
-    it('should fail if a plugin for the configured language is not available', function(done) {
-      var thisTest = function thisTest(err) {
-        expect(err).to.be.null();
-        repo._buildProtos('pubsub', 'v1beta2', 'scala', errsOn(done));
-      };
-      repo._checkRepo(thisTest);
-    });
-    it('should fail if the version does not exist for this api', function(done) {
-      var thisTest = function thisTest(err) {
-        expect(err).to.be.null();
-        repo._buildProtos('pubsub', 'v0alpha', 'python', errsOn(done));
-      };
-      repo._checkRepo(thisTest);
-    });
+    it('should fail if a plugin for the configured language is not available',
+       function(done) {
+         var thisTest = function thisTest(err) {
+           expect(err).to.be.null();
+           repo._buildProtos('pubsub', 'v1beta2', 'scala', errsOn(done));
+         };
+         repo._checkRepo(thisTest);
+       });
+    it('should fail if the version does not exist for this api',
+       function(done) {
+         var thisTest = function thisTest(err) {
+           expect(err).to.be.null();
+           repo._buildProtos('pubsub', 'v0alpha', 'python', errsOn(done));
+         };
+         repo._checkRepo(thisTest);
+       });
     it('should fail if the specified api does not exist', function(done) {
       var thisTest = function thisTest(err) {
         expect(err).to.be.null();
@@ -334,7 +335,7 @@ describe('ApiRepo', function() {
     it('should fail if protoc fails during build', function(done) {
       var badProtocRepo = new ApiRepo({
         isGoogleApi: true,
-        env: {'PATH': fakes.badPath}
+        env: {PATH: fakes.badPath}
       });
       getsGoodZipFrom(badProtocRepo.zipUrl);
 
@@ -348,8 +349,8 @@ describe('ApiRepo', function() {
     });
   });
   describe('method `_findProtocFunc`', function() {
-    var fakes, repo
-    , fakeProto = 'not/a/real/service.proto';
+    var fakes, repo; // eslint-disable-line
+    var fakeProto = 'not/a/real/service.proto';
     before(function() {
       fakes = addFakeProtocToPath();
       repo = new ApiRepo({
@@ -362,7 +363,7 @@ describe('ApiRepo', function() {
     });
     it('should fail if protoc fails', function(done) {
       var protoc = repo._makeProtocFunc({
-        env: {'PATH': fakes.badPath}
+        env: {PATH: fakes.badPath}
       }, 'python');
       protoc(fakeProto, errsOn(done));
     });
@@ -379,9 +380,11 @@ describe('ApiRepo', function() {
         expect(got).to.contain(want);
         done();
       };
-      repo.depBins = {'grpc_python_plugin': '/testing/bin/my_python_plugin'};
+      /* eslint-disable camelcase */
+      repo.depBins = {grpc_python_plugin: '/testing/bin/my_python_plugin'};
+      /* eslint-enable camelcase */
       var protoc = repo._makeProtocFunc({
-        env: {'PATH': fakes.path}
+        env: {PATH: fakes.path}
       }, 'python');
       protoc(fakeProto, shouldPass);
     });
@@ -400,10 +403,12 @@ describe('ApiRepo', function() {
            expect(got).to.contain(want);
            done();
          };
-         repo.depBins = {'grpc_python_plugin': '/testing/bin/my_python_plugin'};
+         /* eslint-disable camelcase */
+         repo.depBins = {grpc_python_plugin: '/testing/bin/my_python_plugin'};
+         /* eslint-enable camelcase */
          repo.includePath = ['/an/include/path', '/another/include/path'];
          var protoc = repo._makeProtocFunc({
-           env: {'PATH': fakes.path}
+           env: {PATH: fakes.path}
          }, 'python');
          protoc(fakeProto, shouldPass);
        });
@@ -417,7 +422,7 @@ describe('ApiRepo', function() {
         done();
       };
       var protoc = repo._makeProtocFunc({
-        env: {'PATH': fakes.path}
+        env: {PATH: fakes.path}
       }, 'go');
       protoc(fakeProto, shouldPass);
     });
@@ -439,7 +444,7 @@ describe('ApiRepo', function() {
       ['example/library', 'v1', 'library.proto']
     ];
     fixtureProtos.forEach(function(f) {
-      it('should detect the ' + f[0] + ' ' + f[1]+ ' protos', function(done) {
+      it('should detect the ' + f[0] + ' ' + f[1] + ' protos', function(done) {
         var foundProtos = [];
         var onProto = function onProto(p, cb) {
           foundProtos.push(p);
@@ -458,10 +463,10 @@ describe('ApiRepo', function() {
     });
   });
   describe('method `_checkRepo()`', function() {
-    var doesNotExist
-    , withoutSubdir
-    , withSubdir
-    , notADir;
+    var doesNotExist;
+    var withoutSubdir;
+    var withSubdir;
+    var notADir;
     before(function() {
       withoutSubdir = tmp.dirSync().name;
       withSubdir = tmp.dirSync().name;
@@ -504,7 +509,7 @@ describe('ApiRepo', function() {
       });
       repo._checkRepo(errsOn(done));
     });
-    describe('when no repoDir is set', function(){
+    describe('when no repoDir is set', function() {
       it('should download the default repo', function(done) {
         var repo = new ApiRepo();
         expect(repo.zipUrl).to.not.be.null();
@@ -549,7 +554,7 @@ describe('ApiRepo', function() {
       var repo = new ApiRepo({
         languages: []
       });
-      repo._checkDeps({env: {'PATH': 'ignored'}}, errsOn(done));
+      repo._checkDeps({env: {PATH: 'ignored'}}, errsOn(done));
     });
     it('should pass if protoc is on the PATH', function(done) {
       var repo = new ApiRepo({
@@ -560,7 +565,7 @@ describe('ApiRepo', function() {
         expect(result).to.be.ok();
         done();
       };
-      repo._checkDeps({env: {'PATH': fakes.path}}, shouldNotError);
+      repo._checkDeps({env: {PATH: fakes.path}}, shouldNotError);
     });
     it('should pass if the plugins are on the PATH', function(done) {
       var repo = new ApiRepo({
@@ -571,13 +576,13 @@ describe('ApiRepo', function() {
         expect(result).to.be.ok();
         done();
       };
-      repo._checkDeps({env: {'PATH': fakes.path}}, shouldNotError);
+      repo._checkDeps({env: {PATH: fakes.path}}, shouldNotError);
     });
     it('should fail if any plugins are not on the PATH', function(done) {
       var repo = new ApiRepo({
         languages: ['lisp', 'scala', 'scheme']
       });
-      repo._checkDeps({env: {'PATH': fakes.path}}, errsOn(done));
+      repo._checkDeps({env: {PATH: fakes.path}}, errsOn(done));
     });
   });
   describe('method `_buildProtoFilesMapping`', function() {

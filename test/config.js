@@ -16,7 +16,6 @@
 
 'use strict';
 
-var _ = require('lodash');
 var chai = require('chai');
 chai.use(require('dirty-chai'));
 var config = require('../lib/config');
