@@ -121,6 +121,7 @@ var parseArgs = function parseArgs() {
   cli.addArgument(
     [ '-r', '--services_root' ],
     {
+      defaultValue: [],
       action: 'append',
       help: 'The directory containing the rpc service proto definitions.\n' +
             ' Can be specified multiple times. Should not be specified with\n' +
@@ -269,7 +270,6 @@ var main = function main() {
   if (opts.outDir) {
     opts.outDir = path.resolve(opts.outDir);
   }
-  opts.repoDirs = opts.repoDirs || [];
   opts.repoDirs = opts.repoDirs.map(function(p) {
    return path.resolve(p);
   });
