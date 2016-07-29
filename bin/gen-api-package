@@ -270,7 +270,9 @@ var main = function main() {
     opts.outDir = path.resolve(opts.outDir);
   }
   opts.repoDirs = opts.repoDirs || [];
-  opts.repoDirs = opts.repoDirs.map(path.resolve);
+  opts.repoDirs = opts.repoDirs.map(function(p) {
+   return path.resolve(p);
+  });
   if (opts.gaxDir) {
     opts.gaxDir = path.resolve(opts.gaxDir);
     opts.pkgPrefix = 'gax-';
