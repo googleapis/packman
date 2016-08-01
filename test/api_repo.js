@@ -354,11 +354,9 @@ describe('ApiRepo', function() {
     var fakePackageDirectory = 'google/pubsub/v1';
     before(function() {
       fakes = addFakeProtocToPath();
-      fs.copySync(path.join(__dirname, 'fixtures/protoc-protos/pubsub.proto'),
+      fs.copySync(path.join(__dirname, 'fixtures/proto-dir/a/pubsub.proto'),
                   path.join(fakes.dir, 'pubsub/v1/pubsub.proto'));
-      repo = new ApiRepo({
-        repoDir: fakes.dir
-      });
+      repo = new ApiRepo();
     });
     after(function() {
       fs.unlinkSync(path.join(fakes.dir, 'protoc'));
@@ -436,39 +434,69 @@ describe('ApiRepo', function() {
     });
   });
   describe('method `_findProtos`', function() {
-    var repo;
-    beforeEach(function(done) {
-      repo = new ApiRepo({
-        isGoogleApi: true
+    var shouldBeOK = function(want, err, protos, done) {
+      expect(err).to.be.null();
+      expect(protos).to.deep.eql(want);
+      done();
+    };
+    describe('using `zipUrl`', function() {
+      var repo;
+      beforeEach(function(done) {
+        repo = new ApiRepo({
+          isGoogleApi: true
+        });
+        getsGoodZipFrom(repo.zipUrl);
+        repo._checkRepo(done); // partially initialize the repo
       });
-      getsGoodZipFrom(repo.zipUrl);
-      repo._checkRepo(done); // partially initialize the repo
+      it('should fail if no dir matches name and version', function(done) {
+        repo._findProtos('notpubsub', 'notaversion', errsOn(done));
+      });
+      var fixtureProtos = [
+          ['pubsub', 'v1beta2', 'pubsub.proto'],
+          ['example/library', 'v1', 'library.proto']
+      ];
+      fixtureProtos.forEach(function(f) {
+        it('should detect the ' + f[0] + ' ' + f[1] + ' protos',
+           function(done) {
+             var foundProtos = [];
+             var onProto = function onProto(dir, p, cb) {
+               foundProtos.push(p);
+               cb(null);
+             };
+             var checkOK = function(err, protos) {
+               var want = repo.repoDirs.map(function(repoDir) {
+                 return [
+                   path.join(repoDir, 'google', f[0], f[1], f[2])
+                 ];
+               });
+               shouldBeOK(want, err, protos, done);
+             };
+             repo._findProtos(f[0], f[1], checkOK, onProto);
+           });
+      });
     });
-    it('should fail if no dir matches name and version', function(done) {
-      repo._findProtos('notpubsub', 'notaversion', errsOn(done));
-    });
-    var fixtureProtos = [
-      ['pubsub', 'v1beta2', 'pubsub.proto'],
-      ['example/library', 'v1', 'library.proto']
-    ];
-    fixtureProtos.forEach(function(f) {
-      it('should detect the ' + f[0] + ' ' + f[1] + ' protos', function(done) {
-        var foundProtos = [];
-        var onProto = function onProto(dir, p, cb) {
-          foundProtos.push(p);
-          cb(null);
+
+    describe('using `repoDirs`', function() {
+      var repo;
+      var fixtureProtos = [
+          [path.join(__dirname, 'fixtures/proto-dir/a/pubsub.proto')],
+          [path.join(__dirname, 'fixtures/proto-dir/b/library.proto'),
+           path.join(__dirname, 'fixtures/proto-dir/b/library2.proto')]];
+      var dirs = _.uniq(_.flatten(fixtureProtos).map(function(proto) {
+        return path.dirname(proto);
+      }));
+      repo = new ApiRepo({
+        repoDirs: dirs
+      });
+      it('should detect with multiple source protos', function(done) {
+        var checkOK = function(err, protos) {
+          shouldBeOK(fixtureProtos, err, protos, done);
         };
-        var shouldBeOK = function(err, protos) {
-          var want = repo.repoDirs.map(function(repoDir) {
-            return [
-              path.join(repoDir, 'google', f[0], f[1], f[2])
-            ];
-          });
+        function thisTest(err) {
           expect(err).to.be.null();
-          expect(protos).to.deep.eql(want);
-          done();
-        };
-        repo._findProtos(f[0], f[1], shouldBeOK, onProto);
+          repo._findProtos('fake', 'v1', checkOK);
+        }
+        repo._checkRepo(thisTest);
       });
     });
   });
@@ -476,10 +504,12 @@ describe('ApiRepo', function() {
     var doesNotExist;
     var withoutSubdir;
     var withSubdir;
+    var anotherDir;
     var notADir;
     before(function() {
       withoutSubdir = tmp.dirSync().name;
       withSubdir = tmp.dirSync().name;
+      anotherDir = tmp.dirSync().name;
       fs.mkdirsSync(path.join(withSubdir, 'google'));
       doesNotExist = tmp.tmpNameSync();
       notADir = tmp.fileSync().name;
@@ -487,39 +517,45 @@ describe('ApiRepo', function() {
     after(function() {
       fs.unlinkSync(notADir);
     });
-    it('should pass if repoDir and reqd subdir are present', function(done) {
+    it('should pass if repoDirs and reqd subdir are present', function(done) {
       var repo = new ApiRepo({
         repoDirs: [withSubdir],
         isGoogleApi: true
       });
       repo._checkRepo(passesOn(done));
     });
-    it('should pass if repoDir is present', function(done) {
+    it('should pass if repoDirs is present', function(done) {
       var repo = new ApiRepo({
         repoDirs: [withoutSubdir]
       });
       repo._checkRepo(passesOn(done));
     });
-    it('should fail if repoDir is missing reqd subdir', function(done) {
+    it('should pass if repoDirs has multiple elements', function(done) {
+      var repo = new ApiRepo({
+        repoDirs: [withoutSubdir, anotherDir]
+      });
+      repo._checkRepo(passesOn(done));
+    });
+    it('should fail if repoDirs is missing reqd subdir', function(done) {
       var repo = new ApiRepo({
         repoDirs: [withoutSubdir],
         isGoogleApi: true
       });
       repo._checkRepo(errsOn(done));
     });
-    it('should fail if repoDir does not exist', function(done) {
+    it('should fail if repoDirs does not exist', function(done) {
       var repo = new ApiRepo({
         repoDirs: [doesNotExist]
       });
       repo._checkRepo(errsOn(done));
     });
-    it('should fail if repoDir is a file', function(done) {
+    it('should fail if repoDirs is a file', function(done) {
       var repo = new ApiRepo({
         repoDirs: [notADir]
       });
       repo._checkRepo(errsOn(done));
     });
-    describe('when no repoDir is set', function() {
+    describe('when no repoDirs is set', function() {
       it('should download the default repo', function(done) {
         var repo = new ApiRepo();
         expect(repo.zipUrl).to.not.be.null();
