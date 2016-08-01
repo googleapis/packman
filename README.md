@@ -89,8 +89,8 @@ Optional arguments:
                         generated.
   -r REPODIR, --services_root REPODIR
                         The directory containing the rpc service proto
-                        definitions. Should not be specified with
-                        -u/--zip_url, which clobbers this.
+                        definitions. Can be specified multiple times. Should
+                        not be specified with -u/--zip_url, which clobbers this.
   -u ZIPURL, --zip_url ZIPURL
                         URL of a git repository containing the rpc proto
                         definitions. Should not be specified with
