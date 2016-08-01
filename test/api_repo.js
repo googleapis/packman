@@ -372,7 +372,6 @@ describe('ApiRepo', function() {
     });
     it('should obtain a func that runs protoc', function(done) {
       var shouldPass = function(err, got) {
-        console.log('test err is ', err)
         expect(err).to.be.null();
         // The test uses the fake protoc, so it just echoes its args
         var want = '--python_out=' + path.join(
@@ -437,7 +436,7 @@ describe('ApiRepo', function() {
     });
   });
   describe('method `_findProtos`', function() {
-    var fakes, repo;
+    var repo;
     beforeEach(function(done) {
       repo = new ApiRepo({
         isGoogleApi: true
@@ -460,9 +459,9 @@ describe('ApiRepo', function() {
           cb(null);
         };
         var shouldBeOK = function(err, protos) {
-          var want = repo.repoDirs.map(function (repoDir) {
+          var want = repo.repoDirs.map(function(repoDir) {
             return [
-                path.join(repoDir, 'google', f[0], f[1], f[2])
+              path.join(repoDir, 'google', f[0], f[1], f[2])
             ];
           });
           expect(err).to.be.null();
