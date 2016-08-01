@@ -350,13 +350,18 @@ describe('ApiRepo', function() {
   });
   describe('method `_findProtocFunc`', function() {
     var fakes, repo; // eslint-disable-line
-    var fakeProto = 'pubsub/v1/pubsub.proto';
+    var fakeProto = 'pubsub.proto';
     var fakePackageDirectory = 'google/pubsub/v1';
+    var fullFakeDir;
     before(function() {
       fakes = addFakeProtocToPath();
-      fs.copySync(path.join(__dirname, 'fixtures/proto-dir/a/pubsub.proto'),
-                  path.join(fakes.dir, 'pubsub/v1/pubsub.proto'));
+      fs.copySync(
+          path.join(__dirname,
+                    'fixtures/proto-dir/a/google/pubsub/v1/pubsub.proto'),
+          path.join(fakes.dir, 'google/pubsub/v1/pubsub.proto'));
       repo = new ApiRepo();
+      fullFakeDir = path.join(fakes.dir, fakePackageDirectory);
+      console.log('fullFakeDir:', fullFakeDir);
     });
     after(function() {
       fs.unlinkSync(path.join(fakes.dir, 'protoc'));
@@ -366,20 +371,20 @@ describe('ApiRepo', function() {
       var protoc = repo._makeProtocFunc({
         env: {PATH: fakes.badPath}
       }, 'python');
-      protoc(fakes.dir, fakeProto, errsOn(done));
+      protoc(fullFakeDir, fakeProto, errsOn(done));
     });
     it('should obtain a func that runs protoc', function(done) {
       var shouldPass = function(err, got) {
         expect(err).to.be.null();
         // The test uses the fake protoc, so it just echoes its args
         var want = '--python_out=' + path.join(
-            repo.outDir, 'python', fakePackageDirectory);
+            repo.outDir, 'python');
         want += ' --grpc_out=' + path.join(
-            repo.outDir, 'python', fakePackageDirectory);
+            repo.outDir, 'python');
         want += ' --plugin=protoc-gen-grpc=/testing/bin/my_python_plugin';
         want += ' -I.';
         want += ' -I/usr/local/include';
-        want += ' ' + fakeProto + '\n';
+        want += ' ' + path.join(fakePackageDirectory, fakeProto) + '\n';
         expect(got).to.contain(want);
         done();
       };
@@ -389,7 +394,7 @@ describe('ApiRepo', function() {
       var protoc = repo._makeProtocFunc({
         env: {PATH: fakes.path}
       }, 'python');
-      protoc(fakes.dir, fakeProto, shouldPass);
+      protoc(fullFakeDir, fakeProto, shouldPass);
     });
     it('should obtain a func that runs protoc with the right includePath',
        function(done) {
@@ -397,14 +402,14 @@ describe('ApiRepo', function() {
            expect(err).to.be.null();
            // The test uses the fake protoc, so it just echoes its args
            var want = '--python_out=' + path.join(
-               repo.outDir, 'python', fakePackageDirectory);
+               repo.outDir, 'python');
            want += ' --grpc_out=' + path.join(
-               repo.outDir, 'python', fakePackageDirectory);
+               repo.outDir, 'python');
            want += ' --plugin=protoc-gen-grpc=/testing/bin/my_python_plugin';
            want += ' -I.';
            want += ' -I/an/include/path';
            want += ' -I/another/include/path';
-           want += ' ' + fakeProto + '\n';
+           want += ' ' + path.join(fakePackageDirectory, fakeProto) + '\n';
            expect(got).to.contain(want);
            done();
          };
@@ -415,22 +420,22 @@ describe('ApiRepo', function() {
          var protoc = repo._makeProtocFunc({
            env: {PATH: fakes.path}
          }, 'python');
-         protoc(fakes.dir, fakeProto, shouldPass);
+         protoc(fullFakeDir, fakeProto, shouldPass);
        });
     it('should obtain a func that runs protoc for GoLang', function(done) {
       var shouldPass = function(err, got) {
         expect(err).to.be.null();
         // The test uses the fake protoc, so it just echoes its args
         var want = '--go_out=plugins=grpc:' + path.join(
-            repo.outDir, 'go', fakePackageDirectory);
-        want += ' ' + fakeProto + '\n';
+            repo.outDir, 'go');
+        want += ' ' + path.join(fakePackageDirectory, fakeProto) + '\n';
         expect(got).to.contain(want);
         done();
       };
       var protoc = repo._makeProtocFunc({
         env: {PATH: fakes.path}
       }, 'go');
-      protoc(fakes.dir, fakeProto, shouldPass);
+      protoc(fullFakeDir, fakeProto, shouldPass);
     });
   });
   describe('method `_findProtos`', function() {
@@ -479,7 +484,9 @@ describe('ApiRepo', function() {
     describe('using `repoDirs`', function() {
       var repo;
       var fixtureProtos = [
-          [path.join(__dirname, 'fixtures/proto-dir/a/pubsub.proto')],
+          [path.join(
+              __dirname,
+              'fixtures/proto-dir/a/google/pubsub/v1/pubsub.proto')],
           [path.join(__dirname, 'fixtures/proto-dir/b/library.proto'),
            path.join(__dirname, 'fixtures/proto-dir/b/library2.proto')]];
       var dirs = _.uniq(_.flatten(fixtureProtos).map(function(proto) {
