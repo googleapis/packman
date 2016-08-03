@@ -10,9 +10,9 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'com.google.protobuf'
 
-description = 'GRPC library for service {{{api.name}}}-{{{api.version}}}'
-group = "io.gapi"
-version = "{{{api.semantic_version}}}"
+description = 'GRPC library for service {{api.name}}-{{api.version}}'
+group = "com.google.api"
+version = "{{api.semantic_version}}"
 // TODO: use a flag to determine whether to produce a release or a snapshot
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -94,7 +94,7 @@ if (rootProject.hasProperty('mavenRepoUrl')) {
     }
     repository(url: mavenRepoUrl, configureAuth)
     pom.project {
-      name "io.gapi:grpc-google-pubsub-v1"
+      name "com.google.api:grpc-{{api.name}}-{{api.version}}"
       description project.description
       url 'https://github.com/googleapis/googleapis'
       scm {
