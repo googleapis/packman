@@ -187,17 +187,6 @@ var parseArgs = function parseArgs() {
     }
   );
   cli.addArgument(
-    [ '-g', '--is_google_api' ],
-    {
-      defaultValue: false,
-      action: 'storeTrue',
-      help: 'When set indicates that the API is an official google API.\n'
-            + ' It means that there is a top-level "google" directory in'
-            + ' the target protocol buffer repository.',
-      dest: 'isGoogleApi'
-    }
-  );
-  cli.addArgument(
     [ '--experimental_alt_java' ],
     {
       defaultValue: false,
@@ -255,11 +244,7 @@ var parsePlugins = function parsePlugins(pluginSpecs) {
  */
 var main = function main() {
   var opts = parseArgs();
-  if (opts.isGoogleApi && !opts.pkgPrefix) {
-    opts.pkgPrefix = 'grpc-google-';
-  }
   if (opts.buildCommonProtos) {
-    opts.isGoogleApi = true;
     opts.pkgPrefix = 'googleapis-common-protos';
     opts.apiName = 'googleapis-common-protos';
     opts.apiVersion = '';

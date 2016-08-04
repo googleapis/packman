@@ -103,7 +103,6 @@ describe('ApiRepo', function() {
       // TODO: add a test case for nodejsUsePbjs: false.
       beforeEach(function() {
         repo = new ApiRepo({
-          isGoogleApi: true,
           nodejsUsePbjs: true,
           includePath: [path.join(__dirname, 'fixtures', 'include')],
           languages: ['nodejs'],
@@ -139,7 +138,6 @@ describe('ApiRepo', function() {
         fakes = addFakeBinsToPath.apply(null, testBins);
         repo = new ApiRepo({
           env: {PATH: fakes.path},
-          isGoogleApi: true,
           languages: ['python'],
           templateRoot: path.join(__dirname, '..', 'templates')
         });
@@ -183,7 +181,6 @@ describe('ApiRepo', function() {
         fakes = addFakeBinsToPath.apply(null, testBins);
         repo = new ApiRepo({
           env: {PATH: fakes.path},
-          isGoogleApi: true,
           languages: ['ruby'],
           templateRoot: path.join(__dirname, '..', 'templates')
         });
@@ -218,7 +215,6 @@ describe('ApiRepo', function() {
         beforeEach(function() {
           repo = new ApiRepo({
             env: {PATH: fakes.path},
-            isGoogleApi: true,
             languages: ['ruby', 'python'],
             templateRoot: path.join(__dirname, '..', 'templates')
           });
@@ -238,7 +234,6 @@ describe('ApiRepo', function() {
         beforeEach(function() {
           repo = new ApiRepo({
             env: {PATH: fakes.path},
-            isGoogleApi: true,
             languages: ['ruby', 'python'],
             templateRoot: path.join(__dirname, '..', 'templates')
           });
@@ -279,7 +274,6 @@ describe('ApiRepo', function() {
     beforeEach(function(done) {
       fakes = addFakeProtocToPath();
       repo = new ApiRepo({
-        isGoogleApi: true,
         env: {PATH: fakes.path}
       });
       getsGoodZipFrom(repo.zipUrl);
@@ -334,7 +328,6 @@ describe('ApiRepo', function() {
     });
     it('should fail if protoc fails during build', function(done) {
       var badProtocRepo = new ApiRepo({
-        isGoogleApi: true,
         env: {PATH: fakes.badPath}
       });
       getsGoodZipFrom(badProtocRepo.zipUrl);
@@ -447,9 +440,7 @@ describe('ApiRepo', function() {
     describe('using `zipUrl`', function() {
       var repo;
       beforeEach(function(done) {
-        repo = new ApiRepo({
-          isGoogleApi: true
-        });
+        repo = new ApiRepo();
         getsGoodZipFrom(repo.zipUrl);
         repo._checkRepo(done); // partially initialize the repo
       });
@@ -527,7 +518,7 @@ describe('ApiRepo', function() {
     it('should pass if repoDirs and reqd subdir are present', function(done) {
       var repo = new ApiRepo({
         repoDirs: [withSubdir],
-        isGoogleApi: true
+        buildCommonProtos: true
       });
       repo._checkRepo(passesOn(done));
     });
@@ -546,7 +537,7 @@ describe('ApiRepo', function() {
     it('should fail if repoDirs is missing reqd subdir', function(done) {
       var repo = new ApiRepo({
         repoDirs: [withoutSubdir],
-        isGoogleApi: true
+        buildCommonProtos: true
       });
       repo._checkRepo(errsOn(done));
     });
@@ -577,7 +568,7 @@ describe('ApiRepo', function() {
       });
       it('should verify the default repo subdir', function(done) {
         var repo = new ApiRepo({
-          isGoogleApi: true
+          buildCommonProtos: true
         });
         expect(repo.zipUrl).to.not.be.null();
         expect(repo.repoDir).to.be.undefined();
