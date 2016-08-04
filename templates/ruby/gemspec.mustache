@@ -2,24 +2,24 @@
 # encoding: utf-8
 
 Gem::Specification.new do |s|
-  s.name          = '{{api.name}}-{{api.version}}'
-  s.version       = '{{api.semantic_version}}'
+  s.name          = '{{{api.name}}}-{{{api.version}}}'
+  s.version       = '{{{api.semantic_version}}}'
 
-  s.authors       = ['{{api.author}}']
-  s.description   = '{{api.description}}'
-  s.email         = '{{api.email}}'
+  s.authors       = ['{{{api.author}}}']
+  s.description   = '{{{api.description}}}'
+  s.email         = '{{{api.email}}}'
   s.files         = Dir.glob(File.join('lib', '**', '*.rb'))
   s.homepage      = '{{{api.homepage}}}'
-  s.license       = '{{api.license}}'
+  s.license       = '{{{api.license}}}'
   s.platform      = Gem::Platform::RUBY
   s.require_paths = ['lib']
   s.required_ruby_version = '>= 2.0.0'
-  s.requirements << 'libgrpc ~> {{dependencies.grpc.core.version}} needs to be installed'
-  s.summary       = 'GRPC library for service {{api.name}}-{{api.version}}'
+  s.requirements << 'libgrpc ~> {{{dependencies.grpc.core.version}}} needs to be installed'
+  s.summary       = 'GRPC library for service {{{api.name}}}-{{{api.version}}}'
 
-  s.add_dependency 'grpc', '~> {{dependencies.grpc.ruby.version}}'
-  s.add_dependency 'googleauth', '~> {{dependencies.auth.ruby.version}}'
-  s.add_dependency 'googleapis-common-protos', '~> {{dependencies.googleapis_common_protos.ruby.version}}'
+  s.add_dependency 'grpc', '~> {{{dependencies.grpc.ruby.version}}}'
+  s.add_dependency 'googleauth', '~> {{{dependencies.auth.ruby.version}}}'
+  s.add_dependency 'googleapis-common-protos', '~> {{{dependencies.googleapis_common_protos.ruby.version}}}'
 
   s.add_development_dependency 'bundler', '~> 1.9'
   s.add_development_dependency 'rake', '~> 10.4'

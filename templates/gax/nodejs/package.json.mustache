@@ -4,12 +4,12 @@
   "version": "{{{api.semantic_version}}}",
   "author": "Google Inc.",
   "description": "GRPC library for service {{{api.name}}}-{{{api.version}}}",
-  "license": "{{api.license}}",
+  "license": "{{{api.license}}}",
   "dependencies": {
-    "arguejs": "^{{dependencies.nodeModules.arguejs.version}}",
-    "google-gax": "^{{dependencies.gax.nodejs.version}}",
+    "arguejs": "^{{{dependencies.nodeModules.arguejs.version}}}",
+    "google-gax": "^{{{dependencies.gax.nodejs.version}}}",
     "grpc": "^{{{dependencies.grpc.nodejs.version}}}",
-    "{{api.dependsOn}}-{{api.version}}": "^{{api.semantic_version}}"
+    "{{{api.dependsOn}}}-{{{api.version}}}": "^{{{api.semantic_version}}}"
   },
   "main": "index.js"
 }

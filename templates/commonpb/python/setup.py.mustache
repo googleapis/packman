@@ -10,15 +10,15 @@ import setuptools
 from setuptools import setup, find_packages
 
 install_requires = [
-  'protobuf>={{dependencies.protobuf.python.version}}'
+  'protobuf>={{{dependencies.protobuf.python.version}}}'
 ]
 
 setuptools.setup(
-  name='{{api.name}}',
-  version='{{api.semantic_version}}',
+  name='{{{api.name}}}',
+  version='{{{api.semantic_version}}}',
 
-  author='{{api.author}}',
-  author_email='{{api.email}}',
+  author='{{{api.author}}}',
+  author_email='{{{api.email}}}',
   classifiers=[
     'Development Status :: 5 - Production/Stable',
     'Intended Audience :: Developers',
@@ -30,8 +30,8 @@ setuptools.setup(
   description='Common protobufs used in Google APIs',
   long_description=open('README.rst').read(),
   install_requires=install_requires,
-  license='{{api.license}}',
+  license='{{{api.license}}}',
   packages=find_packages(),
-  namespace_packages=[{{#api.nsPackages}}'{{.}}', {{/api.nsPackages}}],
+  namespace_packages=[{{#api.nsPackages}}'{{{.}}}', {{/api.nsPackages}}],
   url='{{{api.homepage}}}'
 )

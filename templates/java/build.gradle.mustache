@@ -2,9 +2,9 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-description = 'GRPC library for service {{api.name}}-{{api.version}}'
+description = 'GRPC library for service {{{api.name}}}-{{{api.version}}}'
 group = "io.gapi"
-version = "{{api.semantic_version}}-SNAPSHOT"
+version = "{{{api.semantic_version}}}-SNAPSHOT"
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
@@ -60,7 +60,7 @@ uploadArchives.repositories.mavenDeployer {
   uploadArchives.repositories.mavenDeployer,
 ]*.pom { pom ->
   pom.project {
-    name "io.gapi:{{api.name}}-{{api.version}}"
+    name "io.gapi:{{{api.name}}}-{{{api.version}}}"
     description project.description
     url '{{{api.homepage}}}'
 
@@ -72,16 +72,16 @@ uploadArchives.repositories.mavenDeployer {
 
     licenses {
       license {
-        name '{{api.license}}'
+        name '{{{api.license}}}'
         url '{{{api.license.url}}}'
       }
     }
 
     developers {
       developer {
-        id "{{api.email}}"
-        name "{{api.author}}"
-        email "{{api.email}}"
+        id "{{{api.email}}}"
+        name "{{{api.author}}}"
+        email "{{{api.email}}}"
         url "{{{api.homepage}}}"
         // https://issues.gradle.org/browse/GRADLE-2719
         organization = "Google, Inc."

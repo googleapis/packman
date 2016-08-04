@@ -2,25 +2,25 @@
 # encoding: utf-8
 
 Pod::Spec.new do |s|
-  s.name     = '{{api.name}}-{{api.version}}'
-  s.version  = '{{api.semantic_version}}'
+  s.name     = '{{{api.name}}}-{{{api.version}}}'
+  s.version  = '{{{api.semantic_version}}}'
 
-  s.authors  = { '{{api.author}}' => '{{api.email}}' }
-  s.ios.deployment_target = '{{dependencies.grpc.objc.ios.deployment_target}}'
-  s.osx.deployment_target = '{{dependencies.grpc.objc.osx.deployment_target}}'
-  s.license  = '{{api.license}}'
+  s.authors  = { '{{{api.author}}}' => '{{{api.email}}}' }
+  s.ios.deployment_target = '{{{dependencies.grpc.objc.ios.deployment_target}}}'
+  s.osx.deployment_target = '{{{dependencies.grpc.objc.osx.deployment_target}}}'
+  s.license  = '{{{api.license}}}'
   s.source   = {
     :git => '{{{api.github_user_uri}}}/{{{api.name}}}',
     :tag => "#{s.version}"
   }
-  s.summary  = '{{api.description}}'
+  s.summary  = '{{{api.description}}}'
 
   # The --objc_out plugin generates a pair of .pbobjc.h/.pbobjc.m files for each .proto file.
   s.subspec "Messages" do |ms|
     ms.source_files = "*.pbobjc.{h,m}", "**/*.pbobjc.{h,m}"
     ms.header_mappings_dir = "."
     ms.requires_arc = false
-    ms.dependency "Protobuf", "~> {{dependencies.protobuf.objc.version}}"
+    ms.dependency "Protobuf", "~> {{{dependencies.protobuf.objc.version}}}"
   end
 
   # The --objcgrpc_out plugin generates a pair of .pbrpc.h/.pbrpc.m files for each .proto file with
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
     ss.source_files = "*.pbrpc.{h,m}", "**/*.pbrpc.{h,m}"
     ss.header_mappings_dir = "."
     ss.requires_arc = true
-    ss.dependency "gRPC", "~> {{dependencies.grpc.objc.version}}"
+    ss.dependency "gRPC", "~> {{{dependencies.grpc.objc.version}}}"
     ss.dependency "#{s.name}/Messages"
   end
 end

@@ -1,4 +1,4 @@
-"""A setup module for the GAX {{api.titlename}} library.
+"""A setup module for the GAX {{{api.titlename}}} library.
 
 See:
 https://packaging.python.org/en/latest/distributing.html
@@ -9,17 +9,17 @@ from setuptools import setup, find_packages
 import sys
 
 install_requires = [
-    'googleapis-common-protos>={{dependencies.googleapis_common_protos.python.version}}',
-    'google-gax=={{dependencies.gax.python.version}}',
-    '{{api.dependsOn}}-{{api.version}}>={{api.semantic_version}}',
-    'oauth2client>={{dependencies.auth.python.version}}',
+    'googleapis-common-protos>={{{dependencies.googleapis_common_protos.python.version}}}',
+    'google-gax=={{{dependencies.gax.python.version}}}',
+    '{{{api.dependsOn}}}-{{{api.version}}}>={{{api.semantic_version}}}',
+    'oauth2client>={{{dependencies.auth.python.version}}}',
 ]
 
 setup(
-    name='{{api.name}}-{{api.version}}',
-    version='{{api.semantic_version}}',
-    author='{{api.author}}',
-    author_email='{{api.email}}',
+    name='{{{api.name}}}-{{{api.version}}}',
+    version='{{{api.semantic_version}}}',
+    author='{{{api.author}}}',
+    author_email='{{{api.email}}}',
     classifiers=[
         'Intended Audience :: Developers',
         'Development Status :: 3 - Alpha',
@@ -29,12 +29,12 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: Implementation :: CPython',
     ],
-    description='GAX library for the Google {{api.titlename}} API',
+    description='GAX library for the Google {{{api.titlename}}} API',
     include_package_data=True,
     long_description=open('README.rst').read(),
     install_requires=install_requires,
-    license='{{api.license}}',
+    license='{{{api.license}}}',
     packages=find_packages(),
-    namespace_packages=[{{#api.nsPackages}}'{{.}}', {{/api.nsPackages}}],
+    namespace_packages=[{{#api.nsPackages}}'{{{.}}}', {{/api.nsPackages}}],
     url='{{{api.homepage}}}'
 )

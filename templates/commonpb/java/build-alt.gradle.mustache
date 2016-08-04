@@ -13,7 +13,7 @@ apply plugin: 'com.google.protobuf'
 description = 'Common protobufs used in Google APIs'
 group = "io.gapi"
 version = "0.0.0-SNAPSHOT"
-// version = "{{api.semantic_version}}-SNAPSHOT"
+// version = "{{{api.semantic_version}}}-SNAPSHOT"
 // TODO: switch to this once all common protos are actually public
 // TODO: use a flag to determine whether to produce a release or a snapshot
 
@@ -86,7 +86,7 @@ uploadArchives.repositories.mavenDeployer {
   uploadArchives.repositories.mavenDeployer,
 ]*.pom { pom ->
   pom.project {
-    name "io.gapi:{{api.name}}"
+    name "io.gapi:{{{api.name}}}"
     description project.description
     url '{{{api.homepage}}}'
 
@@ -98,16 +98,16 @@ uploadArchives.repositories.mavenDeployer {
 
     licenses {
       license {
-        name '{{api.license}}'
+        name '{{{api.license}}}'
         url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
      }
     }
 
     developers {
       developer {
-        id "{{api.email}}"
-        name "{{api.author}}"
-        email "{{api.email}}"
+        id "{{{api.email}}}"
+        name "{{{api.author}}}"
+        email "{{{api.email}}}"
         url "{{{api.homepage}}}"
         // https://issues.gradle.org/browse/GRADLE-2719
         organization = "Google, Inc."

@@ -10,9 +10,9 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'com.google.protobuf'
 
-description = 'GRPC library for service {{api.name}}-{{api.version}}'
+description = 'GRPC library for service {{{api.name}}}-{{{api.version}}}'
 group = "io.gapi"
-version = "{{api.semantic_version}}"
+version = "{{{api.semantic_version}}}"
 // TODO: use a flag to determine whether to produce a release or a snapshot
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
