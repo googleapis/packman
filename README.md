@@ -12,7 +12,7 @@ defines protobuf services in a layout similar to that of
 
 
 ```
-gen-api-package --api_name=my_new_service/v1 -l python -r my_protobuf_dir
+gen-api-package --api_name=my_new_service/v1 -l python -r my_protobuf_dir/my_new_service/v1
 ```
 
 Generate the python package for Google's logging/v2 API, where logging/v2 is
@@ -59,7 +59,7 @@ usage: gen-api-package [-h] [-v] [-x] [-i INCLUDEPATH] [-o OUTDIR]
                        [--dependencies_file DEPSFILE]
                        [--common_protos_file COMMONPBFILE]
                        [--package_prefix PKGPREFIX]
-                       [--template_root TEMPLATEROOT] [-g]
+                       [--template_root TEMPLATEROOT]
                        [--override_plugins OVERRIDEPLUGINS]
 
 
@@ -119,9 +119,6 @@ Optional arguments:
                         generation. The template root must contain the same
                         files for any specified languages as in the builtin
                         template root.
-  -g, --is_google_api   When set indicates that the API is an official google
-                        API. It means that there is a top-level "google"
-                        directory in the target protocol buffer repository.
   --override_plugins OVERRIDEPLUGINS
                         Specifies the override protoc plugins to be used. E.g
                         by default the plugin for python is named
