@@ -34,7 +34,7 @@ grpc:
     osx:
       deployment_target: '10.8'
   python:
-    version: '0.15.0'
+    version: '1.0rc1'
   ruby:
     version: '0.15.0'
   nodejs:
@@ -44,7 +44,7 @@ grpc:
 
 gax:
   python:
-    version: '0.12.3'
+    version: '0.12.4'
     next_version: '0.13.0'
   ruby:
     version: '0.4.1'
