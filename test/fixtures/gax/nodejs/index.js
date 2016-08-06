@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-var apiClient = require('./lib/foo_api');
+var apiClient = require('./src/foo_api');
 for (var key in apiClient) {
   exports[key] = apiClient[key];
 }
-var apiClient = require('./lib/bar_api');
+var apiClient = require('./src/bar_api');
 for (var key in apiClient) {
   exports[key] = apiClient[key];
 }

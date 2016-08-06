@@ -15,7 +15,7 @@
  */
 
 {{#apiFiles}}
-var apiClient = require('./lib/{{{.}}}');
+var apiClient = require('./src/{{{.}}}');
 for (var key in apiClient) {
   exports[key] = apiClient[key];
 }
