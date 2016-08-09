@@ -41,6 +41,8 @@ grpc:
     version: '0.15.0'
   php:
     version: '0.14.1'
+  java:
+    version: '0.15.0'
 
 gax:
   python:
@@ -59,6 +61,9 @@ protobuf:
   nodejs:
     # This is the version of ProtoBuf.js.
     version: '5.0.1'
+  java:
+    # Technically, this is the version for for protobuf-java
+    version: '3.0.0-beta-3'
 
 googleapis_common_protos:
   python:

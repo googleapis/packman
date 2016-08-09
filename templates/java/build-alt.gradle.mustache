@@ -10,27 +10,29 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'com.google.protobuf'
 
-description = 'GRPC library for service {{{api.name}}}-{{{api.version}}}'
+{{#api.buildCommonProtos}}
+description = 'GRPC library for core Google API protos'
+{{/api.buildCommonProtos}}
+{{^api.buildCommonProtos}}
+description = 'GRPC library for {{{api.name}}}-{{{api.version}}}'
+{{/api.buildCommonProtos}}
 group = "com.google.api.grpc"
 version = "{{{api.semantic_version}}}"
 // TODO: use a flag to determine whether to produce a release or a snapshot
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
-def tmpSnapshotRepo = "http://104.197.230.53:8081/nexus/content/repositories/snapshots/"
 
 repositories {
   mavenCentral()
   mavenLocal()
-  maven {
-    // Private maven repo.  Temporary, until googleapis-common-protos is published
-    url tmpSnapshotRepo
-  }
 }
 
 dependencies {
-  compile "com.google.protobuf:protobuf-java:3.0.0-beta-3"
-  compile "io.gapi:googleapis-common-protos:0.0.0-SNAPSHOT"
-  compile "io.grpc:grpc-all:0.15.0"
+  compile "com.google.protobuf:protobuf-java:{{{dependencies.protobuf.java.version}}}"
+  {{^api.buildCommonProtos}}
+  compile "com.google.api.grpc:grpc-google-common-protos:{{{api.semantic_version}}}"
+  {{/api.buildCommonProtos}}
+  compile "io.grpc:grpc-all:{{{dependencies.grpc.java.version}}}"
 }
 
 protobuf {
@@ -38,11 +40,11 @@ protobuf {
     // The version of protoc must match protobuf-java. If you don't depend on
     // protobuf-java directly, you will be transitively depending on the
     // protobuf-java version that grpc depends on.
-    artifact = "com.google.protobuf:protoc:3.0.0-beta-3"
+    artifact = "com.google.protobuf:protoc:{{{dependencies.protobuf.java.version}}}"
   }
   plugins {
     grpc {
-      artifact = 'io.grpc:protoc-gen-grpc-java:0.15.0'
+      artifact = 'io.grpc:protoc-gen-grpc-java:{{{dependencies.grpc.java.version}}}'
     }
   }
   generateProtoTasks {
@@ -94,7 +96,12 @@ if (rootProject.hasProperty('mavenRepoUrl')) {
     }
     repository(url: mavenRepoUrl, configureAuth)
     pom.project {
-      name "com.google.api.grpc:grpc-{{{api.name}}}-{{{api.version}}}"
+      {{#api.buildCommonProtos}}
+      name "com.google.api.grpc:grpc-google-common-protos"
+      {{/api.buildCommonProtos}}
+      {{^api.buildCommonProtos}}
+      name "com.google.api.grpc:{{{api.name}}}-{{{api.version}}}"
+      {{/api.buildCommonProtos}}
       description project.description
       url 'https://github.com/googleapis/googleapis'
       scm {

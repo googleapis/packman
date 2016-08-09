@@ -245,9 +245,11 @@ var parsePlugins = function parsePlugins(pluginSpecs) {
 var main = function main() {
   var opts = parseArgs();
   if (opts.buildCommonProtos) {
-    opts.pkgPrefix = 'googleapis-common-protos';
-    opts.apiName = 'googleapis-common-protos';
-    opts.apiVersion = '';
+    if (!opts.altJava) {
+      opts.pkgPrefix = 'googleapis-common-protos';
+      opts.apiName = 'googleapis-common-protos';
+      opts.apiVersion = '';
+    }
   }
   if (opts.overridePlugins) {
     opts.overridePlugins = parsePlugins(opts.overridePlugins);
@@ -280,7 +282,7 @@ var main = function main() {
   repo.on('ready', function() {
     if (opts.gaxDir) {
       repo.buildGaxPackages(apiName, apiVersion);
-    } else if (opts.buildCommonProtos) {
+    } else if (opts.buildCommonProtos && !opts.altJava) {
       repo.buildCommonProtoPkgs();
     } else {
       repo.buildPackages(apiName, apiVersion);

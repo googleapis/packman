@@ -126,6 +126,9 @@ var testPackageInfo = {
       },
       nodejs: {
         version: '5.0.1'
+      },
+      java: {
+        version: '3.0.0-beta-3'
       }
     },
     googleapis_common_protos: {
