@@ -11,7 +11,7 @@ apply plugin: 'signing'
 apply plugin: 'com.google.protobuf'
 
 description = 'GRPC library for service {{{api.name}}}-{{{api.version}}}'
-group = "com.google.api"
+group = "com.google.api.grpc"
 version = "{{{api.semantic_version}}}"
 // TODO: use a flag to determine whether to produce a release or a snapshot
 sourceCompatibility = 1.6
@@ -94,7 +94,7 @@ if (rootProject.hasProperty('mavenRepoUrl')) {
     }
     repository(url: mavenRepoUrl, configureAuth)
     pom.project {
-      name "com.google.api:grpc-{{{api.name}}}-{{{api.version}}}"
+      name "com.google.api.grpc:grpc-{{{api.name}}}-{{{api.version}}}"
       description project.description
       url 'https://github.com/googleapis/googleapis'
       scm {

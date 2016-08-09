@@ -3,7 +3,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 description = 'GRPC library for service {{{api.name}}}-{{{api.version}}}'
-group = "com.google.api"
+group = "com.google.api.grpc"
 version = "{{api.semantic_version}}-SNAPSHOT"
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -60,7 +60,7 @@ uploadArchives.repositories.mavenDeployer {
   uploadArchives.repositories.mavenDeployer,
 ]*.pom { pom ->
   pom.project {
-    name "com.google.api:{{{api.name}}}-{{{api.version}}}"
+    name "com.google.api.grpc:{{{api.name}}}-{{{api.version}}}"
     description project.description
     url '{{{api.homepage}}}'
 

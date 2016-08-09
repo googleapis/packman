@@ -3,7 +3,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 description = 'GRPC library for service packager-unittest-v2'
-group = "com.google.api"
+group = "com.google.api.grpc"
 version = "1.0.0-SNAPSHOT"
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -60,7 +60,7 @@ uploadArchives.repositories.mavenDeployer {
   uploadArchives.repositories.mavenDeployer,
 ]*.pom { pom ->
   pom.project {
-    name "com.google.api:packager-unittest-v2"
+    name "com.google.api.grpc:packager-unittest-v2"
     description project.description
     url 'https://github.com/google/googleapis'
 
