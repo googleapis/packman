@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.google.protobuf:protobuf-java:3.0.0-beta-4"
+  compile "com.google.protobuf:protobuf-java:3.0.0-beta-3"
   compile "io.gapi:googleapis-common-protos:0.0.0-SNAPSHOT"
   compile "io.grpc:grpc-all:0.15.0"
 }
@@ -38,7 +38,7 @@ protobuf {
     // The version of protoc must match protobuf-java. If you don't depend on
     // protobuf-java directly, you will be transitively depending on the
     // protobuf-java version that grpc depends on.
-    artifact = "com.google.protobuf:protoc:3.0.0-beta-4"
+    artifact = "com.google.protobuf:protoc:3.0.0-beta-3"
   }
   plugins {
     grpc {
