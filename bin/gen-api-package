@@ -244,12 +244,10 @@ var parsePlugins = function parsePlugins(pluginSpecs) {
  */
 var main = function main() {
   var opts = parseArgs();
-  if (opts.buildCommonProtos) {
-    if (!opts.altJava) {
-      opts.pkgPrefix = 'googleapis-common-protos';
-      opts.apiName = 'googleapis-common-protos';
-      opts.apiVersion = '';
-    }
+  if (opts.buildCommonProtos && !opts.altJava) {
+    opts.pkgPrefix = 'googleapis-common-protos';
+    opts.apiName = 'googleapis-common-protos';
+    opts.apiVersion = '';
   }
   if (opts.overridePlugins) {
     opts.overridePlugins = parsePlugins(opts.overridePlugins);
