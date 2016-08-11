@@ -18,7 +18,7 @@ TO TEST
   $ ./gradlew install
 ```
 
-Then find the package in `~/.m2/repository/io/gapi`
+Then find the package in `~/.m2/repository/com/google/api/grpc/`
 
 TO PUBLISH
 ----------

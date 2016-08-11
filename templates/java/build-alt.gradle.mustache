@@ -128,4 +128,9 @@ if (rootProject.hasProperty('mavenRepoUrl')) {
       }
     }
   }
+} else {
+  task failUploadArchives << {
+    throw new GradleException("uploadArchives needs mavenRepoUrl to be set")
+  }
+  tasks.uploadArchives.dependsOn(failUploadArchives)
 }
