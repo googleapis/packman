@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
-var grpc = require('grpc');
-exports.client = grpc.loadObject(require('./service'));
-exports.auth = require('google-auth-library');
+var path = require('path');
+
+module.exports = function(relative) {
+  return path.join(__dirname, 'proto', relative);
+};
+l

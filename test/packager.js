@@ -366,48 +366,14 @@ describe('the nodejs package builder', function() {
     ], done);
   });
 
-  it('should construct a proto-based nodejs package', function(done) {
-    var opts = _.merge({
-      packageInfo: testPackageInfo,
-      nodejsUsePbjs: false,
-      top: path.join(top, 'nodejs')
-    }, templateDirs.nodejs);
-    opts.packageInfo.nodejsUseProtos = true;
-    opts.packageInfo.protoFiles = ['proto/foo.proto', 'proto/bar/baz.proto'];
-    var copies = [
-      'nodejs/index.js',
-      'nodejs/PUBLISHING.md'
-    ];
-    var checkCopies = function checkCopies(next) {
-      var checkACopy = genCopyCompareFunc(top);
-      var copyTasks = _.map(copies, checkACopy);
-      async.parallel(copyTasks, next);
-    };
-    var expanded = [
-      'nodejs/package.json',
-      'nodejs/service.js',
-      'nodejs/README.md'
-    ];
-    var compareWithFixture = genFixtureCompareFunc(top, ['proto-based']);
-    var checkExpanded = function checkExpanded(next) {
-      var expandTasks = _.map(expanded, compareWithFixture);
-      async.parallel(expandTasks, next);
-    };
-    async.series([
-      packager.nodejs.bind(null, opts),
-      checkCopies,
-      checkExpanded
-    ], done);
-  });
-
   it('should construct a gax package', function(done) {
     var opts = _.merge({
       packageInfo: testPackageInfo,
       top: path.join(top, 'nodejs')
     }, {templateDir: path.join(__dirname, '..', 'templates', 'gax', 'nodejs')});
-    opts.mockApiFilesForTest = ['foo_api.js', 'bar_api.js'];
+    opts.mockApiFilesForTest = ['v2/foo_api.js', 'v2/bar_api.js'];
     var expanded = [
-      'nodejs/index.js'
+      'nodejs/src/v2/index.js'
     ];
     var compareWithFixture = genFixtureCompareFunc(top, ['gax']);
     var checkExpanded = function checkExpanded(next) {

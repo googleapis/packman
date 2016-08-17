@@ -13,10 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
 
 {{#apiFiles}}
-var apiClient = require('./src/{{{.}}}');
-for (var key in apiClient) {
-  exports[key] = apiClient[key];
-}
+var {{{name}}} = require('./{{{filePath}}}');
 {{/apiFiles}}
+var gax = require('google-gax');
+var extend = require('extend');
+{{^singleFile}}
+var lodash = require('lodash');
+{{/singleFile}}
+
+function {{{api.version}}}(options) {
+  options = extend({
+    scopes: {{{api.version}}}.ALL_SCOPES
+  }, options);
+  var gaxGrpc = gax.grpc(options);
+  {{#singleFile}}
+  return {{{apiFiles[0].name}}}(gaxGrpc);
+  {{/singleFile}}
+  {{^singleFile}}
+  var result = {};
+  {{#apiFiles}}
+  extend(result, {{{name}}}(gaxGrpc));
+  {{/apiFiles}}
+  return result;
+  {{/singleFile}}
+}
+{{{api.version}}}.SERVICE_ADDRESS = {{{serviceAddressName}}}.SERVICE_ADDRESS;
+{{#singleFile}}
+{{{api.version}}}.ALL_SCOPES = {{{serviceAddressName}}}.ALL_SCOPES;
+{{/singleFile}}
+{{^singleFile}}
+{{{api.version}}}.ALL_SCOPES = lodash.union(
+{{#apiFiles}}
+  {{{name}}}.ALL_SCOPES{{^last}},{{/last}}
+{{/apiFiles}}
+);
+{{/singleFile}}
+module.exports = {{{api.version}}};
