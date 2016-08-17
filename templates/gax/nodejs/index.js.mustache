@@ -13,10 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
 
 {{#apiFiles}}
-var apiClient = require('./src/{{{.}}}');
-for (var key in apiClient) {
-  exports[key] = apiClient[key];
-}
+var {{{name}}} = require('./src/{{{filePath}}}');
 {{/apiFiles}}
+var gax = require('google-gax');
+
+module.exports = function(options) {
+  options = options || {};
+  if (!('scopes' in options)) {
+    options.scopes = [];
+    {{#apiFiles}}
+    options.scopes.push({{{name}}}.ALL_SCOPES);
+    {{/apiFiles}}
+  }
+  var gaxGrpc = gax.grpc(options);
+  var result = {};
+  {{#apiFiles}}
+  extend(result, {{{name}}}(gaxGrpc));
+  {{/apiFiles}}
+  return result;
+}
+
+module.exports.SERVICE_ADDRESS = {{{serviceAddressName}}}.SERVICE_ADDRESS;
