@@ -11,7 +11,7 @@ from setuptools import setup, find_packages
 
 install_requires = [
   'oauth2client>=0.4.1',
-  'grpcio>=0.15.0',
+  'grpcio>=1.0rc2',
   'googleapis-common-protos>=1.2.0'
 ]
 
