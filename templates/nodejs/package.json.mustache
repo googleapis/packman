@@ -5,18 +5,10 @@
   "author": "Google Inc.",
   "description": "GRPC library for service {{{api.name}}}-{{{api.version}}}",
   "license": "{{{api.license}}}",
-  "dependencies": {
-    "grpc": "^{{{dependencies.grpc.nodejs.version}}}",
-    "protobufjs": "^{{{dependencies.protobuf.nodejs.version}}}",
-    "google-auth-library": "^{{{dependencies.auth.nodejs.version}}}"
-  },
   "main": "index.js",
   "files": [
     "LICENSE",
-    "index.js",
-{{#nodejsUseProtos}}
     "proto/**/*",
-{{/nodejsUseProtos}}
-    "service.js"
+    "index.js"
   ]
 }

@@ -100,10 +100,8 @@ describe('ApiRepo', function() {
   describe('on the test fixture repo with no plugins', function() {
     var fakes, repo; // eslint-disable-line
     describe('configured for nodejs', function() {
-      // TODO: add a test case for nodejsUsePbjs: false.
       beforeEach(function() {
         repo = new ApiRepo({
-          nodejsUsePbjs: true,
           includePath: [path.join(__dirname, 'fixtures', 'include')],
           languages: ['nodejs'],
           templateRoot: path.join(__dirname, '..', 'templates')

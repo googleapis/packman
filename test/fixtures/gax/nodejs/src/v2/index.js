@@ -13,12 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
 
-var apiClient = require('./src/foo_api');
-for (var key in apiClient) {
-  exports[key] = apiClient[key];
+var fooApi = require('./foo_api');
+var barApi = require('./bar_api');
+var gax = require('google-gax');
+var extend = require('extend');
+var lodash = require('lodash');
+
+function v2(options) {
+  options = extend({
+    scopes: v2.ALL_SCOPES
+  }, options);
+  var gaxGrpc = gax.grpc(options);
+  var result = {};
+  extend(result, fooApi(gaxGrpc));
+  extend(result, barApi(gaxGrpc));
+  return result;
 }
-var apiClient = require('./src/bar_api');
-for (var key in apiClient) {
-  exports[key] = apiClient[key];
-}
+v2.SERVICE_ADDRESS = fooApi.SERVICE_ADDRESS;
+v2.ALL_SCOPES = lodash.union(
+  fooApi.ALL_SCOPES,
+  barApi.ALL_SCOPES
+);
+module.exports = v2;
