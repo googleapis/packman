@@ -19,4 +19,3 @@ var path = require('path');
 module.exports = function(relative) {
   return path.join(__dirname, 'proto', relative);
 };
-l

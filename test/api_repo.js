@@ -101,7 +101,9 @@ describe('ApiRepo', function() {
     var fakes, repo; // eslint-disable-line
     describe('configured for nodejs', function() {
       beforeEach(function() {
+        fakes = addFakeBinsToPath.apply(null, ['protoc']);
         repo = new ApiRepo({
+          env: {PATH: fakes.path},
           includePath: [path.join(__dirname, 'fixtures', 'include')],
           languages: ['nodejs'],
           templateRoot: path.join(__dirname, '..', 'templates')
