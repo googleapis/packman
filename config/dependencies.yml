@@ -36,7 +36,7 @@ grpc:
   python:
     version: '1.0rc1'
   ruby:
-    version: '1.0.0.pre2'
+    version: '1.0'
   nodejs:
     version: '0.15.0'
   php:
@@ -57,7 +57,7 @@ protobuf:
   python:
     version: '3.0.0b3'
   ruby:
-    version: '3.0.0'
+    version: '3.0'
   nodejs:
     # This is the version of ProtoBuf.js.
     version: '5.0.1'
