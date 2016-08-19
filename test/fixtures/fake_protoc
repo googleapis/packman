@@ -20,6 +20,9 @@
 
 main() {
     echo $@  # first echo, the protoc tests need that.
+    if [ -z `echo "$@" | grep -o 'grpc_out'` ]; then
+      return
+    fi
 
     local proto_path=${!#}
     local out_dir=$(echo "$@" | sed 's/.*--grpc_out=\([^ ]*\).*/\1/')
