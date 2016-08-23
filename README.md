@@ -61,6 +61,8 @@ usage: gen-api-package [-h] [-v] [-x] [-i INCLUDEPATH] [-o OUTDIR]
                        [--package_prefix PKGPREFIX]
                        [--template_root TEMPLATEROOT]
                        [--override_plugins OVERRIDEPLUGINS]
+                       [--proto_compiler PROTOCOMPILER]
+                       [--proto_compiler_args PROTOCOMPILERARGS]
 
 
 Creates packages for gRPC services.
@@ -125,4 +127,10 @@ Optional arguments:
                         grpc_python_plugin. This can be modified by
                         specifying --override_plugins
                         python=other_rpc_python_plugin.
+  --proto_compiler PROTOCOMPILER
+                       Specifies the proto compiler to be used, if not protoc
+                       Defaults to protoc.
+  --proto_compiler_args PROTOCOMPILERARGS
+                       Specifies arguments that always should be passed to the
+                       proto compiler
 ```

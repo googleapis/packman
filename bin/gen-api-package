@@ -220,6 +220,22 @@ var parseArgs = function parseArgs() {
       dest: 'overridePlugins'
     }
   );
+  cli.addArgument(
+    [ '--proto_compiler' ],
+    {
+      help: 'Specifies the proto compiler to be used, if not protoc\n' +
+            ' Defaults to protoc.',
+      dest: 'protoCompiler'
+    }
+  );
+  cli.addArgument(
+    [ '--proto_compiler_args' ],
+    {
+      help: 'Specifies arguments that always should be passed to the\n' +
+            ' proto compiler.',
+      dest: 'protoCompilerArgs'
+    }
+  );
   return cli.parseArgs();
 };
 
