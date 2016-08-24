@@ -424,7 +424,7 @@ describe('ApiRepo', function() {
       }, 'go');
       protoc(fullFakeDir, fakeProto, passesOn(done));
     });
-    it('should fail if func that runs alternative protoc', function(done) {
+    it('should fail if alternative protoc is not on path', function(done) {
       var otherRepo = new ApiRepo({
         protoCompiler: 'custom',
         protoCompilerArgs: '--some arg'
