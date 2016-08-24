@@ -374,7 +374,6 @@ describe('ApiRepo', function() {
             repo.outDir, 'python');
         want += ' --grpc_out=' + path.join(
             repo.outDir, 'python');
-        want += ' --plugin=protoc-gen-grpc=/testing/bin/my_python_plugin';
         want += ' -I.';
         want += ' -I/usr/local/include';
         want += ' ' + path.join(fakePackageDirectory, fakeProto) + '\n';
@@ -398,7 +397,6 @@ describe('ApiRepo', function() {
                repo.outDir, 'python');
            want += ' --grpc_out=' + path.join(
                repo.outDir, 'python');
-           want += ' --plugin=protoc-gen-grpc=/testing/bin/my_python_plugin';
            want += ' -I.';
            want += ' -I/an/include/path';
            want += ' -I/another/include/path';
@@ -415,6 +413,27 @@ describe('ApiRepo', function() {
          }, 'python');
          protoc(fullFakeDir, fakeProto, shouldPass);
        });
+    it('should obtain a func that runs alternative protoc', function(done) {
+      var otherRepo = new ApiRepo({
+        protoCompiler: 'custom',
+        protoCompilerArgs: '--some arg'
+      });
+      var otherFakes = addFakeBinsToPath('custom');
+      var protoc = otherRepo._makeProtocFunc({
+        env: {PATH: otherFakes.path}
+      }, 'go');
+      protoc(fullFakeDir, fakeProto, passesOn(done));
+    });
+    it('should fail if func that runs alternative protoc', function(done) {
+      var otherRepo = new ApiRepo({
+        protoCompiler: 'custom',
+        protoCompilerArgs: '--some arg'
+      });
+      var protoc = otherRepo._makeProtocFunc({
+        env: {PATH: fakes.path}
+      }, 'go');
+      protoc(fullFakeDir, fakeProto, errsOn(done));
+    });
     it('should obtain a func that runs protoc for GoLang', function(done) {
       var shouldPass = function(err, got) {
         expect(err).to.be.null();
