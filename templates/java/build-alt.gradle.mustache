@@ -10,12 +10,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'com.google.protobuf'
 
-{{#api.buildCommonProtos}}
-description = 'GRPC library for core Google API protos'
-{{/api.buildCommonProtos}}
-{{^api.buildCommonProtos}}
-description = 'GRPC library for {{{api.name}}}-{{{api.version}}}'
-{{/api.buildCommonProtos}}
+description = 'GRPC library for {{{api.fullName}}}'
 group = "com.google.api.grpc"
 version = "{{{api.semantic_version}}}"
 // TODO: use a flag to determine whether to produce a release or a snapshot
@@ -29,9 +24,9 @@ repositories {
 
 dependencies {
   compile "com.google.protobuf:protobuf-java:{{{dependencies.protobuf.java.version}}}"
-  {{^api.buildCommonProtos}}
-  compile "com.google.api.grpc:grpc-google-common-protos:{{{api.semantic_version}}}"
-  {{/api.buildCommonProtos}}
+  {{#api.dependencies}}
+  compile "com.google.api.grpc:{{{.}}}:{{{api.semantic_version}}}"
+  {{/api.dependencies}}
   compile "io.grpc:grpc-all:{{{dependencies.grpc.java.version}}}"
 }
 
@@ -96,12 +91,7 @@ if (rootProject.hasProperty('mavenRepoUrl')) {
     }
     repository(url: mavenRepoUrl, configureAuth)
     pom.project {
-      {{#api.buildCommonProtos}}
-      name "com.google.api.grpc:grpc-google-common-protos"
-      {{/api.buildCommonProtos}}
-      {{^api.buildCommonProtos}}
-      name "com.google.api.grpc:{{{api.name}}}-{{{api.version}}}"
-      {{/api.buildCommonProtos}}
+      name "com.google.api.grpc:{{{api.fullName}}}"
       description project.description
       url 'https://github.com/googleapis/googleapis'
       scm {

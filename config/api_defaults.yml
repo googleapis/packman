@@ -24,7 +24,7 @@ license: Apache-2.0
 semver:
   go: '0.6.0'
   objc: '0.6.0'
-  java: '0.0.7'
+  java: '0.0.9'
   nodejs: '0.7.1'
   # TODO: Python must go to 1.0.20 or 1.1.0 when we GA, due to mistakenly
   #       publishing some 1.0.x versions to pypi already. They are now

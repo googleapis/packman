@@ -236,6 +236,15 @@ var parseArgs = function parseArgs() {
       dest: 'protoCompilerArgs'
     }
   );
+  cli.addArgument(
+    [ '--dependencies' ],
+    {
+      action: 'append',
+      help: 'Specifies the dependencies on other packages containing\n'
+            + ' proto-generated code.',
+      dest: 'dependencies'
+    }
+  );
   return cli.parseArgs();
 };
 
