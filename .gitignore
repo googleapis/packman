@@ -1,6 +1,9 @@
 # Ignore backup files
 *~
 
+# Build results
+src-gen
+
 # Logs
 logs
 *.log
@@ -32,3 +35,6 @@ node_modules
 # Eclipse files
 .project
 .pydevproject
+
+# Ctags
+tags

@@ -313,6 +313,7 @@ var main = function main() {
   });
   repo.on('error', function(err) {
     console.error('Could not build packages:', err);
+    process.exit(1);
   });
   repo.setUp();
 }
