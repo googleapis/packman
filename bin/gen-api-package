@@ -237,12 +237,12 @@ var parseArgs = function parseArgs() {
     }
   );
   cli.addArgument(
-    [ '--dependencies' ],
+    [ '--proto_gen_pkg_dep' ],
     {
       action: 'append',
-      help: 'Specifies the dependencies on other packages containing\n'
-            + ' proto-generated code.',
-      dest: 'dependencies'
+      help: 'Specifies the dependencies on other packages generated\n'
+            + ' by packman, containing proto-generated code.',
+      dest: 'protoGenPackageDeps'
     }
   );
   return cli.parseArgs();

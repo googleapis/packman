@@ -24,9 +24,9 @@ repositories {
 
 dependencies {
   compile "com.google.protobuf:protobuf-java:{{{dependencies.protobuf.java.version}}}"
-  {{#api.dependencies}}
+  {{#api.protoGenPackageDeps}}
   compile "com.google.api.grpc:{{{.}}}:{{{api.semantic_version}}}"
-  {{/api.dependencies}}
+  {{/api.protoGenPackageDeps}}
   compile "io.grpc:grpc-all:{{{dependencies.grpc.java.version}}}"
 }
 
