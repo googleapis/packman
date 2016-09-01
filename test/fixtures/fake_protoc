@@ -25,6 +25,8 @@ main() {
     local out_dir=$(echo "$@" | sed 's/.*--grpc_out=\([^ ]*\).*/\1/')
     # fix out_dir in case protoc was run for the go plugin
     local out_dir=$(echo "$out_dir" | sed 's/.*--go_out=plugins=grpc:\([^ ]*\).*/\1/')
+    # fix out_dir in case protoc was run for the python plugin
+    local out_dir=$(echo "$out_dir" | sed 's/.*--grpc_python_out=\([^ ]*\).*/\1/')
     echo "out_dir is $out_dir" 1>&2;
     local out_proto_path=${out_dir}/$proto_path
     local out_parent=$(dirname $out_proto_path)

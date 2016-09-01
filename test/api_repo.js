@@ -372,7 +372,7 @@ describe('ApiRepo', function() {
         // The test uses the fake protoc, so it just echoes its args
         var want = '--python_out=' + path.join(
             repo.outDir, 'python');
-        want += ' --grpc_out=' + path.join(
+        want += ' --grpc_python_out=' + path.join(
             repo.outDir, 'python');
         want += ' -I.';
         want += ' -I/usr/local/include';
@@ -395,7 +395,7 @@ describe('ApiRepo', function() {
            // The test uses the fake protoc, so it just echoes its args
            var want = '--python_out=' + path.join(
                repo.outDir, 'python');
-           want += ' --grpc_out=' + path.join(
+           want += ' --grpc_python_out=' + path.join(
                repo.outDir, 'python');
            want += ' -I.';
            want += ' -I/an/include/path';
