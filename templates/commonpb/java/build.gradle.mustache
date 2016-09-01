@@ -18,7 +18,8 @@ repositories {
 }
 
 dependencies {
-  compile "com.google.protobuf:protobuf-java:3.0.0-beta-3"
+  compile "com.google.protobuf:protobuf-java:{{{dependencies.protobuf.java.version}}}"
+  compile "io.grpc:grpc-all:{{{dependencies.grpc.java.version}}}"
 }
 
 task javadocJar(type: Jar) {
