@@ -10,9 +10,12 @@ import setuptools
 from setuptools import setup, find_packages
 
 install_requires = [
-  'protobuf>={{{dependencies.protobuf.python.version}}}',
-  'grpcio>={{{dependencies.grpc.python.version}}}'
+  'protobuf>={{{dependencies.protobuf.python.version}}}'
 ]
+
+extras_require = {
+  'grpc': ['grpcio>={{{dependencies.grpc.python.version}}}']
+}
 
 setuptools.setup(
   name='{{{api.name}}}',
@@ -31,6 +34,7 @@ setuptools.setup(
   description='Common protobufs used in Google APIs',
   long_description=open('README.rst').read(),
   install_requires=install_requires,
+  extras_require=extras_require,
   license='{{{api.license}}}',
   packages=find_packages(),
   namespace_packages=[{{#api.nsPackages}}'{{{.}}}', {{/api.nsPackages}}],
