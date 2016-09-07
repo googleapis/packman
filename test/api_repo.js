@@ -106,7 +106,8 @@ describe('ApiRepo', function() {
           env: {PATH: fakes.path},
           includePath: [path.join(__dirname, 'fixtures', 'include')],
           languages: ['nodejs'],
-          templateRoot: path.join(__dirname, '..', 'templates')
+          templateRoot: path.join(__dirname, '..', 'templates'),
+          protoCompiler: 'echo'
         });
         getsGoodZipFrom(repo.zipUrl);
       });
