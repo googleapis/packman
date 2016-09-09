@@ -133,17 +133,17 @@ describe('ApiRepo', function() {
       });
     });
     describe('configured for python', function() {
-      beforeEach(function() {
-        var testBins = ['protoc', 'grpc_python_plugin'];
-        fakes = addFakeBinsToPath.apply(null, testBins);
-        repo = new ApiRepo({
-          env: {PATH: fakes.path},
-          languages: ['python'],
-          templateRoot: path.join(__dirname, '..', 'templates')
-        });
-        getsGoodZipFrom(repo.zipUrl);
-      });
       describe('method `buildGaxPackages`', function() {
+        beforeEach(function() {
+          var testBins = ['protoc', 'grpc_python_plugin'];
+          fakes = addFakeBinsToPath.apply(null, testBins);
+          repo = new ApiRepo({
+            env: {PATH: fakes.path},
+            languages: ['python'],
+            templateRoot: path.join(__dirname, '..', 'templates')
+          });
+          getsGoodZipFrom(repo.zipUrl);
+        });
         it('should succeed with unrecognized apis', function(done) {
           repo.on('error', function(err) {
             expect(err).to.not.be.null();
@@ -164,6 +164,17 @@ describe('ApiRepo', function() {
         });
       });
       describe('method `buildCommonProtoPkgs`', function() {
+        beforeEach(function() {
+          var testBins = ['protoc', 'grpc_python_plugin'];
+          fakes = addFakeBinsToPath.apply(null, testBins);
+          repo = new ApiRepo({
+            buildCommonProtos: true,
+            env: {PATH: fakes.path},
+            languages: ['python'],
+            templateRoot: path.join(__dirname, '..', 'templates')
+          });
+          getsGoodZipFrom(repo.zipUrl);
+        });
         it('should pass', function(done) {
           repo.on('error', function() {
             throw new Error('should not be reached');
