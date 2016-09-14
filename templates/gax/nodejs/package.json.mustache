@@ -1,15 +1,21 @@
 {
   "url": "{{{api.homepage}}}",
-  "name": "{{{api.name}}}-{{{api.version}}}",
+  "name": "{{{api.name}}}",
   "version": "{{{api.semantic_version}}}",
   "author": "Google Inc.",
-  "description": "GRPC library for service {{{api.name}}}-{{{api.version}}}",
-  "license": "{{{api.license}}}",
+  "description": "{{{api.titlename}}} library for Node.js",
+  "main": "src/index.js",
+  "files": [
+    "src"
+  ],
   "dependencies": {
     "arguejs": "^{{{dependencies.nodeModules.arguejs.version}}}",
     "google-gax": "^{{{dependencies.gax.nodejs.version}}}",
-    "grpc": "^{{{dependencies.grpc.nodejs.version}}}",
-    "{{{api.dependsOn}}}-{{{api.version}}}": "^{{{api.semantic_version}}}"
+    "extend": "^{{{dependencies.nodeModules.extend.version}}}",{{^singleFile}}
+    "lodash.union": "^{{{dependencies.nodeModules.lodash.version}}}",{{/singleFile}}
   },
-  "main": "src/index.js"
+  "license": "{{{api.license}}}",
+  "engines": {
+    "node": ">=0.12.0"
+  }
 }

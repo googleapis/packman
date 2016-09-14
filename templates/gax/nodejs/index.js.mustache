@@ -21,7 +21,7 @@ var {{{name}}} = require('./{{{filePath}}}');
 var gax = require('google-gax');
 var extend = require('extend');
 {{^singleFile}}
-var lodash = require('lodash');
+var union = require('lodash.union');
 {{/singleFile}}
 
 function {{{api.version}}}(options) {
@@ -45,7 +45,7 @@ function {{{api.version}}}(options) {
 {{{api.version}}}.ALL_SCOPES = {{{serviceAddressName}}}.ALL_SCOPES;
 {{/singleFile}}
 {{^singleFile}}
-{{{api.version}}}.ALL_SCOPES = lodash.union(
+{{{api.version}}}.ALL_SCOPES = union(
 {{#apiFiles}}
   {{{name}}}.ALL_SCOPES{{^last}},{{/last}}
 {{/apiFiles}}
