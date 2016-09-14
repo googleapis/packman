@@ -19,7 +19,7 @@ var fooApi = require('./foo_api');
 var barApi = require('./bar_api');
 var gax = require('google-gax');
 var extend = require('extend');
-var lodash = require('lodash');
+var union = require('lodash.union');
 
 function v2(options) {
   options = extend({
@@ -32,7 +32,7 @@ function v2(options) {
   return result;
 }
 v2.SERVICE_ADDRESS = fooApi.SERVICE_ADDRESS;
-v2.ALL_SCOPES = lodash.union(
+v2.ALL_SCOPES = union(
   fooApi.ALL_SCOPES,
   barApi.ALL_SCOPES
 );
