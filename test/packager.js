@@ -139,6 +139,9 @@ var testPackageInfo = {
       },
       ruby: {
         version: '3.0.0b1.1'
+      },
+      nodejs: {
+        version: '0.7.0'
       }
     },
     gax: {
