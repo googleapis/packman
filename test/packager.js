@@ -116,6 +116,8 @@ var testPackageInfo = {
     license: 'BSD-3-Clause',
     name: 'packager-unittest',
     simplename: 'packager',
+    path: 'packager/unittest',
+    shortname: 'unittest',
     version: 'v2',
     semantic_version: '1.0.0'
   },
@@ -137,6 +139,11 @@ var testPackageInfo = {
       },
       ruby: {
         version: '3.0.0b1.1'
+      }
+    },
+    gax: {
+      nodejs: {
+        version: '0.7.0'
       }
     },
     grpc: {
@@ -177,6 +184,17 @@ var testPackageInfo = {
       },
       nodejs: {
         version: '0.9.2'
+      }
+    },
+    nodeModules: {
+      arguejs: {
+        version: '0.2.3'
+      },
+      extend: {
+        version: '3.0.0'
+      },
+      lodash: {
+        version: '4.6.0'
       }
     }
   }
@@ -367,12 +385,20 @@ describe('the nodejs package builder', function() {
   });
 
   it('should construct a gax package', function(done) {
+    var packageInfo = _.cloneDeep(testPackageInfo);
+    // Specifies the style of package name / title name, which should be set in
+    // lib/api_repo.js
+    packageInfo.api.name = '@google-cloud/unittest';
+    packageInfo.api.titlename = 'Packager Unittest';
     var opts = _.merge({
-      packageInfo: testPackageInfo,
+      packageInfo: packageInfo,
       top: path.join(top, 'nodejs')
     }, {templateDir: path.join(__dirname, '..', 'templates', 'gax', 'nodejs')});
     opts.mockApiFilesForTest = ['v2/foo_api.js', 'v2/bar_api.js'];
     var expanded = [
+      'nodejs/README.md',
+      'nodejs/package.json',
+      'nodejs/src/index.js',
       'nodejs/src/v2/index.js'
     ];
     var compareWithFixture = genFixtureCompareFunc(top, ['gax']);
