@@ -9,10 +9,11 @@ from setuptools import setup, find_packages
 import sys
 
 install_requires = [
-    'googleapis-common-protos>={{{dependencies.googleapis_common_protos.python.version}}}',
+    'googleapis-common-protos>={{{dependencies.googleapis_common_protos.python.version}}}, <{{{dependencies.googleapis_common_protos.python.next_version}}}',
     'google-gax>={{{dependencies.gax.python.version}}}, <{{{dependencies.gax.python.next_version}}}',
+    # TODO: need upper bound logic
     '{{{api.dependsOn}}}-{{{api.version}}}>={{{api.semantic_version}}}',
-    'oauth2client>={{{dependencies.auth.python.version}}}',
+    'oauth2client>={{{dependencies.auth.python.version}}}, <{{{dependencies.auth.python.next_version}}}',
 ]
 
 setup(
