@@ -1,4 +1,5 @@
-googleapis-common-protos>={{{dependencies.googleapis_common_protos.python.version}}}
+googleapis-common-protos>={{{dependencies.googleapis_common_protos.python.version}}}, <{{{dependencies.googleapis_common_protos.python.next_version}}}
 google-gax>={{{dependencies.gax.python.version}}}, <{{{dependencies.gax.python.next_version}}}
+# TODO (https://github.com/googleapis/packman/issues/119): need upper bound logic
 {{{api.dependsOn}}}-{{{api.version}}}>={{{api.semantic_version}}}
-oauth2client>={{{dependencies.auth.python.version}}}
+oauth2client>={{{dependencies.auth.python.version}}}, <{{{dependencies.auth.python.next_version}}}
