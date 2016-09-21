@@ -42,7 +42,7 @@ grpc:
   php:
     version: '0.14.1'
   java:
-    version: '0.15.0'
+    version: '1.0.1'
 
 gax:
   python:
@@ -63,7 +63,7 @@ protobuf:
     version: '5.0.1'
   java:
     # Technically, this is the version for for protobuf-java
-    version: '3.0.0-beta-3'
+    version: '3.0.0'
 
 googleapis_common_protos:
   python:
