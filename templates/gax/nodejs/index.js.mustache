@@ -30,7 +30,7 @@ function {{{api.version}}}(options) {
   }, options);
   var gaxGrpc = gax.grpc(options);
   {{#singleFile}}
-  return {{{apiFiles[0].name}}}(gaxGrpc);
+  return {{{apiFiles.0.name}}}(gaxGrpc);
   {{/singleFile}}
   {{^singleFile}}
   var result = {};

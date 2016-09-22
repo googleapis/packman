@@ -414,6 +414,30 @@ describe('the nodejs package builder', function() {
     };
     async.series([packager.nodejs.bind(null, opts), checkExpanded], done);
   });
+
+  it('should construct a gax package for single service API', function(done) {
+    var packageInfo = _.cloneDeep(testPackageInfo);
+    // Specifies the style of package name / title name, which should be set in
+    // lib/api_repo.js
+    packageInfo.api.name = '@google-cloud/unittest';
+    packageInfo.api.titlename = 'Packager Unittest';
+    var opts = _.merge({
+      packageInfo: packageInfo,
+      top: path.join(top, 'nodejs')
+    }, {templateDir: path.join(__dirname, '..', 'templates', 'gax', 'nodejs')});
+    opts.mockApiFilesForTest = ['v2/foo_api.js'];
+    var expanded = [
+      'nodejs/package.json',
+      'nodejs/src/v2/index.js'
+    ];
+    var compareWithFixture = genFixtureCompareFunc(
+        top, ['gax', 'nodejs-single']);
+    var checkExpanded = function checkExpanded(next) {
+      var expandTasks = _.map(expanded, compareWithFixture);
+      async.parallel(expandTasks, next);
+    };
+    async.series([packager.nodejs.bind(null, opts), checkExpanded], done);
+  });
 });
 
 describe('the java package builder', function() {
