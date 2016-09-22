@@ -12,7 +12,7 @@ from setuptools import setup, find_packages
 install_requires = [
   'oauth2client>={{{dependencies.auth.python.version}}}, <{{{dependencies.auth.python.next_version}}}',
   'grpcio>={{{dependencies.grpc.python.version}}}, <{{{dependencies.grpc.python.next_version}}}',
-  'googleapis-common-protos[grpc]>={{{dependencies.googleapis_common_protos.python.version}}}, <{{{dependencies.googleapis_common_protos.python.next_version}}}'
+  'googleapis-common-protos[grpc]>={{{dependencies.googleapis_common_protos.python.version}}}'
 ]
 
 setuptools.setup(
