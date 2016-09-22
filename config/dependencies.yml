@@ -48,8 +48,8 @@ grpc:
 
 gax:
   python:
-    version: '0.13.0'
-    next_version: '0.14.0'
+    version: '0.14.1'
+    next_version: '0.15.0'
   ruby:
     version: '0.5.1'
   nodejs:
