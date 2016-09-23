@@ -13,7 +13,7 @@ install_requires = [
     'google-gax>={{{dependencies.gax.python.version}}}, <{{{dependencies.gax.python.next_version}}}',
     # TODO (https://github.com/googleapis/packman/issues/119): need upper bound logic
     '{{{api.dependsOn}}}-{{{api.version}}}>={{{api.semantic_version}}}',
-    'oauth2client>={{{dependencies.auth.python.version}}}',
+    'oauth2client>={{{dependencies.auth.python.version}}}, <{{{dependencies.auth.python.next_version}}}',
 ]
 
 setup(

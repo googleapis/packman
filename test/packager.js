@@ -136,7 +136,7 @@ var testPackageInfo = {
     googleapis_common_protos: {
       python: {
         version: '1.2.0',
-        next_version: '2.0.0'
+        next_version: '2.0.0dev'
       },
       ruby: {
         version: '3.0.0b1.1'
@@ -171,7 +171,7 @@ var testPackageInfo = {
       },
       python: {
         version: '0.15.0',
-        next_version: '0.16.0'
+        next_version: '0.16.0dev'
       },
       ruby: {
         version: '0.9.3'
@@ -182,7 +182,8 @@ var testPackageInfo = {
     },
     auth: {
       python: {
-        version: '0.4.1'
+        version: '0.4.1',
+        next_version: '0.5.0dev'
       },
       ruby: {
         version: '0.4.1'
