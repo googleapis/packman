@@ -182,8 +182,7 @@ var testPackageInfo = {
     },
     auth: {
       python: {
-        version: '0.4.1',
-        next_version: '0.5.0'
+        version: '0.4.1'
       },
       ruby: {
         version: '0.4.1'
