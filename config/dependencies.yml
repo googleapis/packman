@@ -53,7 +53,7 @@ gax:
   ruby:
     version: '0.5.1'
   nodejs:
-    version: '0.5.1'
+    version: '0.6.0'
 
 protobuf:
   python:
