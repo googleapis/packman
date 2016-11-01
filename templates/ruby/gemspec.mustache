@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 Gem::Specification.new do |s|
-  s.name          = '{{{api.name}}}-{{{api.version}}}'
+  s.name          = '{{{api.name}}}'
   s.version       = '{{{api.semantic_version}}}'
 
   s.authors       = ['{{{api.author}}}']
@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.required_ruby_version = '>= 2.0.0'
   s.requirements << 'libgrpc ~> {{{dependencies.grpc.core.version}}} needs to be installed'
-  s.summary       = 'GRPC library for service {{{api.name}}}-{{{api.version}}}'
+  s.summary       = 'GRPC library for service {{{api.name}}}'
 
   s.add_dependency 'grpc', '~> {{{dependencies.grpc.ruby.version}}}'
   s.add_dependency 'googleauth', '~> {{{dependencies.auth.ruby.version}}}'

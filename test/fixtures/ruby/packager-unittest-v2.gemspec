@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 Gem::Specification.new do |s|
-  s.name          = 'packager-unittest-v2'
+  s.name          = 'packager-unittest'
   s.version       = '1.0.0'
 
   s.authors       = ['Google Inc']
@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.required_ruby_version = '>= 2.0.0'
   s.requirements << 'libgrpc ~> 0.9.0 needs to be installed'
-  s.summary       = 'GRPC library for service packager-unittest-v2'
+  s.summary       = 'GRPC library for service packager-unittest'
 
   s.add_dependency 'grpc', '~> 0.9.3'
   s.add_dependency 'googleauth', '~> 0.4.1'
