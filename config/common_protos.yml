@@ -20,9 +20,6 @@ packages:
     name: 'api'
     version: ''
   -
-    name: 'appengine/logging'
-    version: 'v1'
-  -
     name: 'longrunning'
     version: ''
   -
@@ -36,4 +33,4 @@ packages:
     version: ''
 
 # semver is the semantic version of the common protos package.
-semver: 1.4.0
+semver: 1.5.0
