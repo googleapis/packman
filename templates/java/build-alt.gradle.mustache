@@ -28,6 +28,16 @@ dependencies {
   compile "com.google.api.grpc:{{{.}}}:{{{api.semantic_version}}}"
   {{/api.protoGenPackageDeps}}
   compile "io.grpc:grpc-all:{{{dependencies.grpc.java.version}}}"
+  compile "com.google.api:api-common:{{{dependencies.api-common.java.version}}}"
+}
+
+ext.locateGapicPluginMethod = { ->
+  def outstream = new ByteArrayOutputStream()
+  exec {
+    commandLine 'which', 'gapic_plugin.py'
+    standardOutput = outstream
+  }
+  return outstream.toString().trim()
 }
 
 protobuf {
@@ -41,11 +51,18 @@ protobuf {
     grpc {
       artifact = 'io.grpc:protoc-gen-grpc-java:{{{dependencies.grpc.java.version}}}'
     }
+    gapic {
+      path = locateGapicPluginMethod()
+    }
   }
   generateProtoTasks {
     all()*.plugins {
       grpc {
         outputSubDir = 'java'
+      }
+      gapic {
+        outputSubDir = 'java'
+        option '{{{api.gapicYaml}}}'
       }
     }
   }

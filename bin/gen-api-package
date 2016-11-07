@@ -233,6 +233,14 @@ var parseArgs = function parseArgs() {
       dest: 'protoGenPackageDeps'
     }
   );
+  cli.addArgument(
+    [ '--gapic_yaml' ],
+    {
+      help: 'Specifies the gapic yaml, which is required\n' +
+            + ' for resource name generation.',
+      dest: 'gapicYaml'
+    }
+  );
   return cli.parseArgs();
 };
 
