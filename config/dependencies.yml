@@ -19,7 +19,7 @@
 auth:
   python:
     version: '2.0.0'
-    next_version: '4.0.0dev'
+    next_version: '4.0dev'
   ruby:
     version: '0.5.1'
   nodejs:
@@ -36,7 +36,7 @@ grpc:
       deployment_target: '10.8'
   python:
     version: '1.0.0'
-    next_version: '2.0.0dev'
+    next_version: '2.0dev'
   ruby:
     version: '1.0'
   nodejs:
@@ -49,7 +49,7 @@ grpc:
 gax:
   python:
     version: '0.15.0'
-    next_version: '0.16.0dev'
+    next_version: '0.16dev'
   ruby:
     version: '0.5.1'
   nodejs:
@@ -58,7 +58,7 @@ gax:
 protobuf:
   python:
     version: '3.0.0'
-    next_version: '4.0.0dev'
+    next_version: '4.0dev'
   ruby:
     version: '3.0'
   nodejs:
@@ -71,7 +71,7 @@ protobuf:
 googleapis_common_protos:
   python:
     version: '1.5.0'
-    next_version: '2.0.0dev'
+    next_version: '2.0dev'
   ruby:
     version: '1.3.1'
   nodejs:
