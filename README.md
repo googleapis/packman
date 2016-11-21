@@ -63,6 +63,8 @@ usage: gen-api-package [-h] [-v] [-x] [-i INCLUDEPATH] [-o OUTDIR]
                        [--override_plugins OVERRIDEPLUGINS]
                        [--proto_compiler PROTOCOMPILER]
                        [--proto_compiler_args PROTOCOMPILERARGS]
+                       [--proto_gen_pkg_dep PROTOGENPKGDEPS]
+                       [--gapic_yaml GAPICYAML]
 
 
 Creates packages for gRPC services.
@@ -128,9 +130,15 @@ Optional arguments:
                         specifying --override_plugins
                         python=other_rpc_python_plugin.
   --proto_compiler PROTOCOMPILER
-                       Specifies the proto compiler to be used, if not protoc
-                       Defaults to protoc.
+                        Specifies the proto compiler to be used, if not protoc
+                        Defaults to protoc.
   --proto_compiler_args PROTOCOMPILERARGS
-                       Specifies arguments that always should be passed to the
-                       proto compiler
+                        Specifies arguments that always should be passed to the
+                        proto compiler
+  --proto_gen_pkg_dep PROTOGENPKGDEPS
+                        Specifies the dependencies on other packages generated
+                        by packman, containing proto-generated code.
+  --gapic_yaml GAPICYAML
+                        Specifies the gapic yaml, which is required for
+                        resource name generation.
 ```
