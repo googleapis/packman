@@ -15,8 +15,8 @@
  */
 'use strict';
 
-var fooApi = require('./foo_api');
-var barApi = require('./bar_api');
+var fooClient = require('./foo_client');
+var barClient = require('./bar_client');
 var gax = require('google-gax');
 var extend = require('extend');
 var union = require('lodash.union');
@@ -27,13 +27,13 @@ function v2(options) {
   }, options);
   var gaxGrpc = gax.grpc(options);
   var result = {};
-  extend(result, fooApi(gaxGrpc));
-  extend(result, barApi(gaxGrpc));
+  extend(result, fooClient(gaxGrpc));
+  extend(result, barClient(gaxGrpc));
   return result;
 }
-v2.SERVICE_ADDRESS = fooApi.SERVICE_ADDRESS;
+v2.SERVICE_ADDRESS = fooClient.SERVICE_ADDRESS;
 v2.ALL_SCOPES = union(
-  fooApi.ALL_SCOPES,
-  barApi.ALL_SCOPES
+  fooClient.ALL_SCOPES,
+  barClient.ALL_SCOPES
 );
 module.exports = v2;

@@ -15,7 +15,7 @@
  */
 'use strict';
 
-var fooApi = require('./foo_api');
+var fooClient = require('./foo_client');
 var gax = require('google-gax');
 var extend = require('extend');
 
@@ -24,8 +24,8 @@ function v2(options) {
     scopes: v2.ALL_SCOPES
   }, options);
   var gaxGrpc = gax.grpc(options);
-  return fooApi(gaxGrpc);
+  return fooClient(gaxGrpc);
 }
-v2.SERVICE_ADDRESS = fooApi.SERVICE_ADDRESS;
-v2.ALL_SCOPES = fooApi.ALL_SCOPES;
+v2.SERVICE_ADDRESS = fooClient.SERVICE_ADDRESS;
+v2.ALL_SCOPES = fooClient.ALL_SCOPES;
 module.exports = v2;

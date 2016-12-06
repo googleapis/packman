@@ -400,7 +400,7 @@ describe('the nodejs package builder', function() {
       packageInfo: packageInfo,
       top: path.join(top, 'nodejs')
     }, {templateDir: path.join(__dirname, '..', 'templates', 'gax', 'nodejs')});
-    opts.mockApiFilesForTest = ['v2/foo_api.js', 'v2/bar_api.js'];
+    opts.mockApiFilesForTest = ['v2/foo_client.js', 'v2/bar_client.js'];
     var expanded = [
       'nodejs/README.md',
       'nodejs/package.json',
@@ -425,7 +425,7 @@ describe('the nodejs package builder', function() {
       packageInfo: packageInfo,
       top: path.join(top, 'nodejs')
     }, {templateDir: path.join(__dirname, '..', 'templates', 'gax', 'nodejs')});
-    opts.mockApiFilesForTest = ['v2/foo_api.js'];
+    opts.mockApiFilesForTest = ['v2/foo_client.js'];
     var expanded = [
       'nodejs/package.json',
       'nodejs/src/v2/index.js'
