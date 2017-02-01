@@ -338,7 +338,7 @@ describe('the ruby package builder', function() {
       async.parallel(copyTasks, next);
     };
     var expanded = [
-      'ruby/packager-unittest-v2.gemspec'
+      'ruby/packager-unittest.gemspec'
     ];
     var compareWithFixture = genFixtureCompareFunc(top);
     var checkExpanded = function checkExpanded(next) {
