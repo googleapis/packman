@@ -31,6 +31,10 @@ dependencies {
   compile "com.google.api:api-common:{{{dependencies.api-common.java.version}}}"
 }
 
+ext {
+  packageName = '{{{api.fullName}}}'
+}
+
 ext.locateGapicPluginMethod = { ->
   def outstream = new ByteArrayOutputStream()
   exec {
@@ -112,7 +116,7 @@ if (rootProject.hasProperty('mavenRepoUrl')) {
     }
     repository(url: mavenRepoUrl, configureAuth)
     pom.project {
-      name "com.google.api.grpc:{{{api.fullName}}}"
+      name "com.google.api.grpc:${packageName}"
       description project.description
       url 'https://github.com/googleapis/googleapis'
       scm {
@@ -144,4 +148,54 @@ if (rootProject.hasProperty('mavenRepoUrl')) {
     throw new GradleException("uploadArchives needs mavenRepoUrl to be set")
   }
   tasks.uploadArchives.dependsOn(failUploadArchives)
+}
+
+task checkOutGhPages {
+  if (!new File('tmp_gh-pages').exists()) {
+    exec {
+      commandLine 'git', 'clone', '--branch', 'gh-pages',
+          '--single-branch', 'https://github.com/googleapis/googleapis/', 'tmp_gh-pages'
+    }
+  }
+}
+
+task copyFilesToGhPages {
+  dependsOn 'checkOutGhPages'
+  dependsOn 'javadoc'
+  doLast {
+    def newSiteDirPath = "tmp_gh-pages/java/${packageName}/${project.version}/apidocs/"
+    new File(newSiteDirPath).mkdirs()
+    copy {
+      from 'build/docs/javadoc'
+      into newSiteDirPath
+    }
+  }
+}
+
+task createApiDocsRedirect {
+  dependsOn 'copyFilesToGhPages'
+  doLast {
+    def outputContent = new File('templates/apidocs_index.html.template').text
+    {{=<% %>=}}
+    outputContent = outputContent.replace('{{siteVersion}}', project.version)
+    outputContent = outputContent.replace('{{packageName}}', packageName)
+    <%={{ }}=%>
+    new File("tmp_gh-pages/java/${packageName}/apidocs").mkdirs()
+    new File("tmp_gh-pages/java/${packageName}/apidocs/index.html").write(outputContent)
+    exec {
+      workingDir 'tmp_gh-pages/'
+      commandLine 'git', 'add', '.'
+    }
+    exec {
+      workingDir 'tmp_gh-pages/'
+      commandLine 'git', 'commit', '-m', "Regenerating docs for ${packageName} ${project.version}"
+    }
+    println 'New docs have been generated under tmp_gh-pages and have been committed;'
+    println 'Next they just need to be pushed with "git push".'
+  }
+}
+
+// Regenerates the gh-pages branch under tmp_gh-pages, which must be committed separately
+task updateDocsWithCurrentVersion {
+  dependsOn 'createApiDocsRedirect'
 }
